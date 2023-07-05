@@ -1,0 +1,87 @@
+1. customers can register an account:
+	- customer should be able to provide following details
+		a. first name, lastname, surname
+		b. email address / username
+		c. password
+		d. gender
+		e. date of birth
+		f. phone number
+		g. address
+
+	- customer should be able to revoke account if needed
+		a. customer should be able to download a copy
+		   of data the system has about them.
+		b. customer should be able to deactivate account
+
+	- customer has to verify themselves to the system
+		a. verification by email
+
+2. customer should be able to login to the system by authenticating
+   themselves, and also logout of the system once they're done
+
+3. customers can search for available journeys
+	- using filters: 
+		a. depature date/time
+		b. origin
+			b.1. country, town, pick-up station/halt
+		c. destination
+			c.1. country, town, drop-off station/halt
+		d. route
+		e. days of the week of the route
+		f. journey cost
+		g. coach capacity
+		h. # of available seats
+
+4. customer should be able to book journeys in the future
+	- constraints:
+		a. customer should not be able to book journeys in the past
+		b. customer should not be able to overbook
+
+5. similarly, managers can login to the system after they have an approved
+   account.
+
+6. managers should be able to add new routes to a journey
+	- a journey is a ride between origin and destination
+	- there are 1 or more routes in a journey
+
+7. managers should be able to edit a route in a journey
+	- by specifying road segments in the system
+
+8. managers should be able to delete a route in a journey
+
+9. managers should be able to add/edit/delete journeys
+
+10. managers should be able to view a list of all journeys
+
+11. managers should be able to view a list of all routes in a journey
+
+12. managers should be able to add/edit/delete coach vehicles and properties
+	- a coach has a station at the origin and destination
+	- a coach is refuelled and maintained at a station
+	- a coach has a vehicle brand/model
+	- a coach has a seat capacity
+	- a coach has a fuel capacity
+	- a coach has a luggage capacity
+	- a coach has a max-speed
+	- a coach has a journey assignment
+	- a coach has a journey log
+		i. total distance travelled
+		ii. list of all journeys done
+	
+13. managers should be able to add/edit/delete stations/pick-up/drop-off locations
+	- a station should have a name, and a location
+	- a station should display all available coaches
+		i. a coach at a station can be assigned to a journey
+		ii. a coach at a station can be unassigned
+	- a pickup location should have a name and physical location
+	- a pickup location is not the same as a station
+	- the drop-off location should have a name and physical location
+	- the drop-off location is the destination
+
+14. managers should be able to view status of coaches available at a station
+	- # of coaches ready to be assigned
+	- # of faulty coaches
+	- # of assigned coaches
+
+15. managers should be able to view the realtime location of a coach
+	in a journey
