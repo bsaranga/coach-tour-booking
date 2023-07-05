@@ -21,7 +21,13 @@ namespace experiments
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
+
+            app.Use((context, next) =>
+            {
+                return next.Invoke(context);
+            });
 
             app.UseHttpsRedirection();
 
