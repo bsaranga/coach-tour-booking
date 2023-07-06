@@ -18,8 +18,29 @@
 			iv. gender
 			v. phone number
 			vi. address
+			vii. profile image
 		- Past Journeys
+			i. itenary
+			ii. date/times
+			iii. travel time
+			iv. seat(s) booked
+			v. coach number
 		- Current Journey Bookings
+			i. itenary
+				- selected pickup/drop-off points
+			ii. current status
+				- parked|boarding|in-transit
+			iii. seat(s) booked
+			iv. coach number
+			v. start time
+			vi. estimated travel time
+		- Notifications
+			i. send notification when boarding begins
+			ii. send notification when boarding is over
+			iii. send notification when journey begins
+			iv. send notification when a pickup point is being approached
+			v. send notification when destination is being approached
+			vi. send notification when drop-off point is being approached
 	b. Employee account
 	c. Admin account
 

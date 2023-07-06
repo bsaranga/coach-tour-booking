@@ -8,8 +8,8 @@
 		f. phone number
 		g. address
 
-	- customer should be able to view/edit their account information
-		a. profile details (view/edit)
+	- customer should be able to add/view/edit their account information
+		a. profile details (add/view/edit)
 		b. past journeys (view only)
 		c. current journey bookings (view/edit)
 		d. notifications (view only)
