@@ -1,0 +1,47 @@
+**Actors**
+
+1. Europe bus employees
+2. Customers
+
+**Interfaces**
+
+1. Web client
+
+**Entities**
+
+1. User accounts
+	a. Customer account
+		- Profile
+			i. first name, lastname, surname
+			ii. email address / username
+			iii. date of birth
+			iv. gender
+			v. phone number
+			vi. address
+		- Past Journeys
+		- Current Journey Bookings
+	b. Employee account
+	c. Admin account
+
+2. Journey
+	2.1. Route
+		2.1.1. Road
+			2.1.1.1 Street
+			2.1.1.2 Highway
+
+3. Location
+	3.1. Station
+	3.2. Pick-up point
+	3.3. Drop-off point
+	3.4. Pin
+
+4. Coach
+
+5. Booking
+
+								   +---------+
+                             |<----| queries |
+                             |	   +---------+
++------------+     +---------+     +------------+
+| controller |<----| service |<----| repository |
++------------+     +---------+     +------------+
