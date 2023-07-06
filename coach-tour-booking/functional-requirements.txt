@@ -1,0 +1,32 @@
+[ ] Customer profile:
+
+1. Customer should be able to provide following details and create a customer account
+		a. first name, lastname, surname
+		b. email address / username
+		c. password
+		d. gender
+		e. date of birth
+		f. phone number
+		g. address
+		h. country
+
+2. When the customer enters the email address (username), it should be validated to be a valid email address.
+	- "Invalid email address"
+3. When the customer enters the email address (username), it should be checked if it already exists.
+	- "User already exists, please try logging in or try registering with a different username."
+4. When the customer enters the password, it should be checked for strength with the following requirements:
+	i. length must be greater than 6 characters
+		- "Password must be atleast 6 characters in length"
+	ii. must include atleast one special character
+		- "Password must include atleast one special character"
+	iii. must mix lowercase and uppercase
+		- "Password must be a mix of upper and lowercase characters"
+	iv. must include atleast one number
+		- "Password must include atleast one number"
+5. If the country and phone number doesn't match, a validation message is displayed under phone number:
+	- "Invalid phone number for given region"
+6. Validate the phone number, and if it fails, a validation message is displayed:
+	- "Invalid phone number"
+
+* Developer Notes *
+- only username existence makes a request to the backend, other's a validated on the front-end
