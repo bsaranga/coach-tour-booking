@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace coach_tour_booking_domain.Services.Interfaces
 {
-    internal interface IAccount
+    public interface IAccount
     {
+        ValidationResult ValidateUsername(string username);
     }
 }
