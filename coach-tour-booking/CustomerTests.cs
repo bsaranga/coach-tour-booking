@@ -14,7 +14,7 @@ namespace coach_tour_booking_tests
             var validationResult = accountService.ValidateUsername(existingUsername);
             var expectedErrorMessage = "User already exists, please try logging in or try registering with a different username.";
 
-            Assert.Equals(expectedErrorMessage, validationResult.ErrorMessage!);
+            Assert.That(expectedErrorMessage, Is.EqualTo(validationResult.ErrorMessage!));
         }
     }
 }
