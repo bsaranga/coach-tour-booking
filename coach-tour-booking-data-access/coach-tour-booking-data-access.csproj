@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>coach_tour_booking_domain</RootNamespace>
+    <RootNamespace>coach_tour_booking_data_access</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\coach-tour-booking-data-access\coach-tour-booking-data-access.csproj" />
+    <Folder Include="Queries\Implementations\" />
   </ItemGroup>
 
 </Project>

@@ -27,6 +27,3 @@
 	- "Invalid phone number for given region"
 6. Validate the phone number, and if it fails, a validation message is displayed:
 	- "Invalid phone number"
-
-* Developer Notes *
-- only username existence makes a request to the backend, other's a validated on the front-end
