@@ -1,4 +1,1 @@
-﻿[ ] Customer profile:
-
-1. Only username existence makes a request to the backend, other's a validated on the front-end.
-2. Once the user profile object is sent to the backend, they must be validated once more.
+﻿
