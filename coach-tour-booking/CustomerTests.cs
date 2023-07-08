@@ -1,4 +1,5 @@
 ﻿using coach_tour_booking_data_access.Queries.Interfaces;
+using coach_tour_booking_data_access.Repositories;
 using coach_tour_booking_domain;
 using coach_tour_booking_domain.DTOs;
 using coach_tour_booking_domain.Services.Implementations;
@@ -16,13 +17,13 @@ namespace coach_tour_booking_tests
         public CustomerTests()
         {
             userQuery = SetupUserQueryMock();
-            accountRepository = SetUpAccountRepositoryMock();
+            accountRepository = new AccountRepository();
         }
 
         private IAccountRepository SetUpAccountRepositoryMock()
         {
             var accountRepositoryMock = new Mock<IAccountRepository>();
-            accountRepositoryMock.Setup(a => a.CreateAccount(It.IsAny<CustomerInfo>())).Returns(new Account(Role.Customer));
+            accountRepositoryMock.Setup(a => a.CreateAccount(It.IsAny<CustomerInfo>())).Returns(new Account("","","",0,DateTime.Today,"","",""));
             return accountRepositoryMock.Object;
         }
         private IUserQuery SetupUserQueryMock()
@@ -61,10 +62,16 @@ namespace coach_tour_booking_tests
         public void When_A_CustomerInfo_DTO_Is_Given_A_Customer_Account_Is_Created()
         {
             // Create customer info object
-            var customerInfo = new CustomerInfo
-            {
+            string firstName = "John";
+            string lastName = "Doe";
+            string surName = "Generic";
+            Gender gender = 0;
+            DateTime dob = new DateTime(1993, 2, 17);
+            string address = "87, Mulholland Drive, CA";
+            string country = "USA";
+            string phone = "5559302291";
 
-            };
+            var customerInfo = new CustomerInfo(firstName, lastName, surName, gender, dob, address, country, phone);
             
             // Create account using repository
             var accountService = new AccountService(userQuery, accountRepository);
@@ -72,6 +79,16 @@ namespace coach_tour_booking_tests
             
             // Verify the created account has role of customer
             Assert.That(account.GetRole(), Is.EqualTo(Role.Customer));
+
+            // Verify integrity
+            Assert.That(account.firstName, Is.EqualTo(firstName));
+            Assert.That(account.lastName, Is.EqualTo(lastName));
+            Assert.That(account.surname, Is.EqualTo(surName));
+            Assert.That(account.gender, Is.EqualTo(gender));
+            Assert.That(account.dateOfBirth, Is.EqualTo(dob));
+            Assert.That(account.address, Is.EqualTo(address));
+            Assert.That(account.country, Is.EqualTo(country));
+            Assert.That(account.phone, Is.EqualTo(phone));
         }
     }
 }

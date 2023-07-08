@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\coach-tour-booking-domain\coach-tour-booking-domain.csproj" />
   </ItemGroup>
 
 </Project>
