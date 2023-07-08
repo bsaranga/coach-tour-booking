@@ -7,8 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\coach-tour-booking-data-access\coach-tour-booking-data-access.csproj" />
-  </ItemGroup>
-
 </Project>

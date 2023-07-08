@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\Implementations\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
