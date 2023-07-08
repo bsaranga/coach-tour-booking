@@ -1,6 +1,6 @@
 [ ] Customer profile:
 
-[ ] 1. Customer should be able to provide following details and create a customer account
+[x] 1. Customer should be able to provide following details and create a customer account
 		a. first name, lastname, surname
 		b. email address / username
 		c. password
