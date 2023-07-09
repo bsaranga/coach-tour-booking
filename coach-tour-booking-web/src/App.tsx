@@ -1,11 +1,8 @@
-import CreateCustomerAccount from "./modules/customer/CreateCustomerAccount";
+import React from 'react';
 
 function App() {
   return (
-    <>
-      <div>Hello world...</div>
-      <CreateCustomerAccount/>
-    </>
+    <div aria-label='main'>Hello world...</div>
   );
 }
 
