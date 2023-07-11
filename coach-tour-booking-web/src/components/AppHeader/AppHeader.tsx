@@ -1,5 +1,5 @@
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material"
+import { AppBar, Box, Button, Icon, Toolbar, Typography } from "@mui/material";
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 
 export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
     return (
@@ -9,15 +9,9 @@ export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
                     <Toolbar sx={{
                         backgroundColor: "#4b76ed"
                         }}>
-                        <IconButton
-                            size="small"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <Icon sx={{mr: 1.5}}>
+                            <DirectionsBusIcon />
+                        </Icon>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             EuroBus
                         </Typography>

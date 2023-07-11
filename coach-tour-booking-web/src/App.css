@@ -12,28 +12,30 @@
 .content_area {
     display: flex;
     flex-direction: column;
-    border: 5px solid red;
     flex-grow: 1;
 }
 
 /* Mobile devices (up to 767px) */
 @media only screen and (max-width: 767px) {
     .content_area {
-        border-color: blue;
+        /*
+            Mobile specific styles
+        */
     }
 }
 
 /* Tablet devices (768px to 991px) */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .content_area {
-        border-color: green;
+        /*
+            Tablet specific styles
+        */
     }
 }
 
 /* Desktop devices (992px and above) */
 @media only screen and (min-width: 992px) {
     .content_area {
-        border-color: orange;
         flex-direction: row;
     }
 }
