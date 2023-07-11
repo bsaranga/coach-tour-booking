@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './AppRoot';
+import AppRoot from './AppRoot';
 
 test('renders learn react link', () => {
-  render(<App />);
-  const greeting = screen.getByLabelText('main');
+  render(<AppRoot/>);
+  const greeting = screen.getByTestId('appname');
   expect(greeting).toBeInTheDocument();
 });

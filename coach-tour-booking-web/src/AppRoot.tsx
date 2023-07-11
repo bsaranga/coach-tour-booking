@@ -4,7 +4,7 @@ import AppHeader from './components/AppHeader/AppHeader';
 import Navigation from './components/Navigation/Navigation';
 import IViewState from './interfaces/AppState/IViewState';
 
-function App() {
+function AppRoot() {
   
   const [viewState, setViewState] = useState<IViewState>({
     isDesktop: true,
@@ -85,4 +85,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppRoot;

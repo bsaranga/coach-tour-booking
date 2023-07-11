@@ -12,7 +12,7 @@ export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
                         <Icon sx={{mr: 1.5}}>
                             <DirectionsBusIcon />
                         </Icon>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <Typography data-testid="appname" variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             EuroBus
                         </Typography>
                         <Button color="inherit">Login</Button>
