@@ -3,8 +3,9 @@ import './App.css'
 import AppHeader from './components/AppHeader/AppHeader';
 import Navigation from './components/Navigation/Navigation';
 import IViewState from './interfaces/AppState/IViewState';
+import { Outlet } from 'react-router-dom';
 
-function AppRoot() {
+function App() {
   
   const [viewState, setViewState] = useState<IViewState>({
     isDesktop: true,
@@ -74,10 +75,7 @@ function AppRoot() {
       <div className="content_area">
         <Navigation viewState={viewState} />
         <div className='app_view'>
-          App Area
-          {
-            viewState.isMobile ? ("MOBILE") : viewState.isTablet ? ("TABLET") : ("DESKTOP")
-          }
+          <Outlet/>
         </div>
       </div>
       <div className='footer_area'>Footer</div>
@@ -85,4 +83,4 @@ function AppRoot() {
   );
 }
 
-export default AppRoot;
+export default App;

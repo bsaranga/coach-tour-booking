@@ -9,20 +9,28 @@ import {
 	Tab,
 	Tabs,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+
 export interface INavigationProps {
 	viewState: IViewState;
 }
 
-interface IKeyValue {
+interface IKeyValueAttributes<T> {
     key: number | string,
-    value: string | any
+    value: string | any,
+	attr: T
 }
-const pages: IKeyValue[] = [
-    {value: "Journeys", key: 0},
-    {value: "Activities", key: 1},
-    {value: "Bookings", key: 2},
-    {value: "Luggage", key: 3},
-    {value: "Itenary", key: 4},
+
+interface IRoute {
+	pathName: string;
+}
+
+const pages: IKeyValueAttributes<IRoute>[] = [
+    {value: "Journeys", key: 0, attr: { pathName: "journeys" }},
+    {value: "Activities", key: 1, attr: {pathName: "activities"}},
+    {value: "Bookings", key: 2, attr: {pathName: "bookings"}},
+    {value: "Luggage", key: 3, attr: {pathName: "luggage"}},
+    {value: "Itenary", key: 4, attr: {pathName: "itenary"}},
 ]
 
 export default function Navigation(props: INavigationProps) {
@@ -44,15 +52,27 @@ export default function Navigation(props: INavigationProps) {
 		</Tabs>
 	) : (
 		<Box sx={{ width: "100%", maxWidth: 260, bgcolor: "background.paper" }}>
-			<nav aria-label="main mailbox folders">
+			<nav style={{
+				boxShadow: "3px 0px 10px rgb(225, 225, 225)",
+				height: "100%",
+			}}>
 				<List>
                     {
                         pages.map(page => (
-                        <ListItem key={page.key} disablePadding>
-                            <ListItemButton key={page.key} onClick={() => handleChange(null, page.key as number)} selected={tabValue === page.key}>
-                                <ListItemText key={page.key} primary={page.value} />
-                            </ListItemButton>
-                        </ListItem>))
+						<RouterLink style={{
+							textDecoration: "none",
+							color: "rgb(10, 10, 10)"
+						}} to={page.attr.pathName}>
+							<ListItem key={page.key} disablePadding>
+								<ListItemButton
+									key={page.key} 
+									onClick={() => handleChange(null, page.key as number)} 
+									selected={tabValue === page.key}
+									>
+									<ListItemText key={page.key} primary={page.value} />
+								</ListItemButton>
+							</ListItem>
+						</RouterLink>))
                     }
 				</List>
 			</nav>

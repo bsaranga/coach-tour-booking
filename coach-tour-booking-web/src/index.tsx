@@ -9,12 +9,19 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import "@fontsource/roboto/700.css";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Journeys from './pages/Journeys';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppRoot/>,
-  }
+    children: [
+      {
+        path: "journeys",
+        element: <Journeys/>
+      }
+    ]
+  },
 ])
 
 const root = ReactDOM.createRoot(
