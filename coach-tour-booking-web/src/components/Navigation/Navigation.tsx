@@ -25,9 +25,10 @@ export default function Navigation(props: INavigationProps) {
 		<Tabs value={tabValue}
             onChange={handleChange}
             variant={viewState.isTablet ? "standard" : "scrollable"}
-            centered={viewState.isTablet}>
+            centered={viewState.isTablet}
+			allowScrollButtonsMobile={viewState.isMobile}>
             {
-                Routes.map(page => <Tab sx={{ textTransform: "none" }} label={page.value} />)
+                Routes.map(page => <Tab sx={{ textTransform: "none" }} label={page.value} {...{component: RouterLink, to: page.attr.pathName}} />)
             }
 		</Tabs>
 	) : (
@@ -39,20 +40,16 @@ export default function Navigation(props: INavigationProps) {
 				<List>
                     {
                         Routes.map(page => (
-						<RouterLink style={{
-							textDecoration: "none",
-							color: "rgb(10, 10, 10)"
-						}} to={page.attr.pathName}>
-							<ListItem key={page.key} disablePadding>
-								<ListItemButton
-									key={page.key} 
-									onClick={() => handleChange(null, page.key as number)} 
-									selected={tabValue === page.key}
-									>
-									<ListItemText key={page.key} primary={page.value} />
-								</ListItemButton>
-							</ListItem>
-						</RouterLink>))
+						<ListItem key={page.key} disablePadding>
+							<ListItemButton
+								key={page.key} 
+								onClick={() => handleChange(null, page.key as number)} 
+								selected={tabValue === page.key}
+								{...{component: RouterLink, to: page.attr.pathName}}
+								>
+								 <ListItemText key={page.key} primary={page.value} />
+							</ListItemButton>
+						</ListItem>))
                     }
 				</List>
 			</nav>
