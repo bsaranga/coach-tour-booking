@@ -11,24 +11,39 @@
 
 .content_area {
     display: flex;
-    border: 1px solid red;
+    flex-direction: column;
+    border: 5px solid red;
     flex-grow: 1;
 }
 
-.navigation_area {
-    border: 1px solid blue;
-    background-color: rgb(215, 115, 208);
-    width: 18rem;
+/* Mobile devices (up to 767px) */
+@media only screen and (max-width: 767px) {
+    .content_area {
+        border-color: blue;
+    }
+}
+
+/* Tablet devices (768px to 991px) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .content_area {
+        border-color: green;
+    }
+}
+
+/* Desktop devices (992px and above) */
+@media only screen and (min-width: 992px) {
+    .content_area {
+        border-color: orange;
+        flex-direction: row;
+    }
 }
 
 .app_view {
-    border: 1px solid purple;
     background-color: rgb(153, 115, 215);
     flex-grow: 1;
 }
 
 .footer_area {
-    border: 1px solid green;
     background-color: rgb(215, 115, 157);
     height: 4rem;
 }
