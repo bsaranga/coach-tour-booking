@@ -6,7 +6,7 @@ export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
         <div {...props}>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
-                    <Toolbar variant="dense" sx={{ backgroundColor: "#4b76ed" }}>
+                    <Toolbar variant="dense" sx={{ backgroundColor: "#8bcce7" }}>
                         <img src={euroBusLogo} style={{ width: '48px', marginRight: '8px' }} alt="logo"/>
                         <Typography data-testid="appname" variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             EuroBus

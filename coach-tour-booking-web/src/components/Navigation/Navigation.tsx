@@ -1,5 +1,4 @@
 import { SyntheticEvent, useState } from "react";
-import IViewState from "../../interfaces/AppState/IViewState";
 import {
 	Box,
 	List,
@@ -9,29 +8,10 @@ import {
 	Tab,
 	Tabs,
 } from "@mui/material";
+
 import { Link as RouterLink } from "react-router-dom";
-
-export interface INavigationProps {
-	viewState: IViewState;
-}
-
-interface IKeyValueAttributes<T> {
-    key: number | string,
-    value: string | any,
-	attr: T
-}
-
-interface IRoute {
-	pathName: string;
-}
-
-const pages: IKeyValueAttributes<IRoute>[] = [
-    {value: "Journeys", key: 0, attr: { pathName: "journeys" }},
-    {value: "Activities", key: 1, attr: {pathName: "activities"}},
-    {value: "Bookings", key: 2, attr: {pathName: "bookings"}},
-    {value: "Luggage", key: 3, attr: {pathName: "luggage"}},
-    {value: "Itenary", key: 4, attr: {pathName: "itenary"}},
-]
+import { INavigationProps } from "../../interfaces/Common/INavigationProps";
+import Routes from "../../configuration/Routes";
 
 export default function Navigation(props: INavigationProps) {
 	const { viewState } = props;
@@ -47,7 +27,7 @@ export default function Navigation(props: INavigationProps) {
             variant={viewState.isTablet ? "standard" : "scrollable"}
             centered={viewState.isTablet}>
             {
-                pages.map(page => <Tab sx={{ textTransform: "none" }} label={page.value} />)
+                Routes.map(page => <Tab sx={{ textTransform: "none" }} label={page.value} />)
             }
 		</Tabs>
 	) : (
@@ -58,7 +38,7 @@ export default function Navigation(props: INavigationProps) {
 			}}>
 				<List>
                     {
-                        pages.map(page => (
+                        Routes.map(page => (
 						<RouterLink style={{
 							textDecoration: "none",
 							color: "rgb(10, 10, 10)"

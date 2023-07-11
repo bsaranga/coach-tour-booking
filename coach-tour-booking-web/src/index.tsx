@@ -9,7 +9,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import "@fontsource/roboto/700.css";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Journeys from './pages/Journeys';
+import Explore from './pages/Explore';
 import Activities from './pages/Activities';
 import Bookings from './pages/Bookings';
 import Luggage from './pages/Luggage';
@@ -21,8 +21,8 @@ const router = createBrowserRouter([
     element: <AppRoot/>,
     children: [
       {
-        path: "journeys",
-        element: <Journeys/>
+        path: "explore",
+        element: <Explore/>
       },
       {
         path: "activities",
