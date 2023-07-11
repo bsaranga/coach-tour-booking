@@ -1,9 +1,9 @@
-interface IEUMember {
+export interface IEUMember {
     country: string,
     cities: string[]
 }
 
-interface ICityByCountry {
+export interface ICityByCountry {
     name: string,
     country: string,
 }
@@ -121,5 +121,5 @@ const SupportedEUCountriesMixedArray = SupportedEUCountries.map(el => {
 
 export {
     SupportedEUCountries, 
-    SupportedEUCountriesMixedArray
+    SupportedEUCountriesMixedArray,
 };
