@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import AppRoot from './AppRoot';
 import reportWebVitals from './reportWebVitals';
@@ -8,38 +7,20 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import "@fontsource/roboto/700.css";
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Explore from './pages/Explore';
-import Activities from './pages/Activities';
-import Bookings from './pages/Bookings';
-import Luggage from './pages/Luggage';
-import Itenary from './pages/Itenary';
+import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Routes from './configuration/Routes';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppRoot/>,
     children: [
-      {
-        path: "explore",
-        element: <Explore/>
-      },
-      {
-        path: "activities",
-        element: <Activities/>
-      },
-      {
-        path: "bookings",
-        element: <Bookings/>
-      },
-      {
-        path: "luggage",
-        element: <Luggage/>
-      },
-      {
-        path: "itenary",
-        element: <Itenary/>
-      }
+      ...Routes.map(route => {
+        return {
+          path: route.attr.pathName,
+          element: route.attr.component,
+        } as RouteObject
+      })
     ]
   },
 ])
