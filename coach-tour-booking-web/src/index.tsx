@@ -10,6 +10,10 @@ import '@fontsource/roboto/500.css';
 import "@fontsource/roboto/700.css";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Journeys from './pages/Journeys';
+import Activities from './pages/Activities';
+import Bookings from './pages/Bookings';
+import Luggage from './pages/Luggage';
+import Itenary from './pages/Itenary';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +23,22 @@ const router = createBrowserRouter([
       {
         path: "journeys",
         element: <Journeys/>
+      },
+      {
+        path: "activities",
+        element: <Activities/>
+      },
+      {
+        path: "bookings",
+        element: <Bookings/>
+      },
+      {
+        path: "luggage",
+        element: <Luggage/>
+      },
+      {
+        path: "itenary",
+        element: <Itenary/>
       }
     ]
   },
