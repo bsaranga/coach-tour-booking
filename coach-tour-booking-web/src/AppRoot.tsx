@@ -4,6 +4,7 @@ import AppHeader from './components/AppHeader/AppHeader';
 import Navigation from './components/Navigation/Navigation';
 import IViewState from './interfaces/AppState/IViewState';
 import { Outlet } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 function App() {
   
@@ -78,7 +79,11 @@ function App() {
           <Outlet/>
         </div>
       </div>
-      <div className='footer_area'>Footer</div>
+      <div className='footer_area'>
+        <Typography variant='caption' color={'grey'} fontSize={viewState.isMobile ? 6 : viewState.isTablet ? 8 : 10} align='center'>
+          © 2022 EU Coach Travel. All rights reserved. Prices subject to change according to prevailing exchange rates. All journeys subject to local traffic conditions and regulations. ID verification required for travel. Service may change due to unforeseen circumstances. EU Coach Travel complies with GDPR and related European Union privacy legislation.
+        </Typography>
+      </div>
     </div>
   );
 }

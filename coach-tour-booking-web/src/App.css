@@ -17,19 +17,15 @@
 
 /* Mobile devices (up to 767px) */
 @media only screen and (max-width: 767px) {
-    .content_area {
-        /*
-            Mobile specific styles
-        */
+    .footer_area {
+        padding: 0 2rem 0 2rem;
     }
 }
 
 /* Tablet devices (768px to 991px) */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .content_area {
-        /*
-            Tablet specific styles
-        */
+    .footer_area {
+        padding: 0 6rem 0 6rem;
     }
 }
 
@@ -37,6 +33,9 @@
 @media only screen and (min-width: 992px) {
     .content_area {
         flex-direction: row;
+    }
+    .footer_area {
+        padding: 0 21rem 0 21rem;
     }
 }
 
@@ -47,6 +46,9 @@
 }
 
 .footer_area {
-    background-color: rgb(215, 115, 157);
-    height: 4rem;
+    border-top: 1px solid rgb(231, 231, 231);
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
