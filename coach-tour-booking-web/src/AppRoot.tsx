@@ -72,7 +72,7 @@ function App() {
     <div className="main_container">
       <AppHeader/>
       <div className="content_area">
-        <Navigation />
+        <Navigation viewState={viewState} />
         <div className='app_view'>
           App Area
           {
