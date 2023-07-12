@@ -9,7 +9,6 @@ import '@fontsource/roboto/500.css';
 import "@fontsource/roboto/700.css";
 import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Routes from './configuration/Routes';
-import LookupService from './services/LookupService';
 
 const router = createBrowserRouter([
   {

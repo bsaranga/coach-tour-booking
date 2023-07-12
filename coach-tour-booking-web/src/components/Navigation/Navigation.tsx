@@ -28,7 +28,7 @@ export default function Navigation(props: INavigationProps) {
             centered={viewState.isTablet}
 			allowScrollButtonsMobile={viewState.isMobile}>
             {
-                Routes.map(page => <Tab sx={{ textTransform: "none" }} label={page.value} {...{component: RouterLink, to: page.attr.pathName}} />)
+                Routes.map(page => <Tab sx={{ textTransform: "none" }} key={page.key} label={page.value} {...{component: RouterLink, to: page.attr.pathName}} />)
             }
 		</Tabs>
 	) : (
