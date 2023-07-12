@@ -3,8 +3,8 @@ export interface IEUMember {
     cities: string[]
 }
 
-export interface ICityByCountry {
-    name: string,
+export interface ICityCountryPair {
+    city: string,
     country: string,
 }
 
@@ -108,10 +108,10 @@ const SupportedEUCountries: IEUMember[] = [
 ];
 
 const SupportedEUCountriesMixedArray = SupportedEUCountries.map(el => {
-    const subList: ICityByCountry[] = [];
+    const subList: ICityCountryPair[] = [];
     el.cities.forEach(city => {
         subList.push({
-            name: city,
+            city: city,
             country: el.country
         })
     });

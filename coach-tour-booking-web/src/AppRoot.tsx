@@ -5,6 +5,7 @@ import Navigation from './components/Navigation/Navigation';
 import IViewState from './interfaces/AppState/IViewState';
 import { Outlet } from 'react-router-dom';
 import { Typography } from '@mui/material';
+import "./pages/Pages.css"
 
 function App() {
   

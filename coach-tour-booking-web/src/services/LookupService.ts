@@ -1,4 +1,4 @@
-import { ICityByCountry, SupportedEUCountriesMixedArray } from "../mock_data/SupportedEUCountries"
+import { ICityCountryPair, SupportedEUCountriesMixedArray } from "../mock_data/SupportedEUCountries"
 
 export default class LookupService {
     constructor() {
@@ -6,7 +6,7 @@ export default class LookupService {
     }
 
     get getAllEUNations() {
-        return new Promise<ICityByCountry[]>((resolve, reject) => {
+        return new Promise<ICityCountryPair[]>((resolve, reject) => {
             setTimeout(() => {
                 resolve(SupportedEUCountriesMixedArray);
             }, 237);
