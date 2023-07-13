@@ -6,11 +6,6 @@ import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import IViewState from "../../interfaces/AppState/IViewState";
 
-const containerStyle = {
-	width: "640px",
-	height: "480px",
-};
-
 type LatLngLiteral = google.maps.LatLngAltitudeLiteral;
 type MapOptions = google.maps.MapOptions;
 type Map = google.maps.Map;
@@ -24,6 +19,21 @@ const mapFunction = function Map() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyCXnAwt1CIxspRegyw_wdNq3OMVSidKWLE",
   })
+
+  const containerStyle = useMemo(() => {
+    const desktopSize = {
+      width: "640px",
+      height: "480px",
+    }
+
+    const mobileSize = {
+      width: "360px",
+      height: "400px",
+    }
+
+    return context.screenSize === 'mobile' ? mobileSize : desktopSize;
+
+  }, [context.screenSize]);
 
   const center = useMemo<LatLngLiteral>(() => {
     return {
