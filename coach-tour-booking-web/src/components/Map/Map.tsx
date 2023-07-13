@@ -2,7 +2,7 @@ import {
 	GoogleMap,
   useLoadScript
 } from "@react-google-maps/api";
-import { memo, useCallback, useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import IViewState from "../../interfaces/AppState/IViewState";
 
@@ -28,8 +28,8 @@ const mapFunction = function Map() {
   const center = useMemo<LatLngLiteral>(() => {
     return {
       altitude: 0,
-      lat: -3.745,
-      lng: -38.523
+      lat: 47.070714, 
+      lng: 15.439504
     }
   }, []);
 
@@ -41,12 +41,22 @@ const mapFunction = function Map() {
     }
   }, [])
 
+  // map move experiment
+  useEffect(() => {
+    setTimeout(() => {
+      mapRef.current?.panTo({
+        lat: 48.2081743,
+        lng: 16.3738189,
+      })
+    }, 1000);
+  }, []);
+
   if (!isLoaded) return <div>Loading...</div>
   return <div>
     <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={9}
         options={mapOptions}
         onLoad={onLoad}
       >
