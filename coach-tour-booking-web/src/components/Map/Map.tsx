@@ -2,17 +2,18 @@ import {
 	GoogleMap,
   useLoadScript
 } from "@react-google-maps/api";
-import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import { ForwardedRef, MutableRefObject, forwardRef, memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import IViewState from "../../interfaces/AppState/IViewState";
 
-type LatLngLiteral = google.maps.LatLngAltitudeLiteral;
-type MapOptions = google.maps.MapOptions;
-type Map = google.maps.Map;
+export type LatLngLiteral = google.maps.LatLngAltitudeLiteral;
+export type MapOptions = google.maps.MapOptions;
+export type Map = google.maps.Map;
 
-const mapFunction = function Map() {
+const mapFunction = forwardRef(function Map(props, ref: ForwardedRef<Map>) {
   const context = useOutletContext<IViewState>();
-  const mapRef = useRef<Map>();
+
+  const mapRef = ref as MutableRefObject<Map>;
 
   const onLoad = useCallback((map: Map) => { mapRef.current = map }, []);
 
@@ -72,6 +73,6 @@ const mapFunction = function Map() {
       >
       </GoogleMap>
   </div>
-}
+})
 
 export default memo(mapFunction);

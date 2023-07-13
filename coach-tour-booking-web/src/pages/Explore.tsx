@@ -1,17 +1,19 @@
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import LookupService from "../services/LookupService";
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
-import Map from "../components/Map/Map";
-import { LatLng, getGeocode, getLatLng } from "use-places-autocomplete";
+import { getGeocode, getLatLng } from "use-places-autocomplete";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Map from "../components/Map/Map";
+import { Map as MapType } from "../components/Map/Map";
 
 export default function Explore() {
+
+	const mapRef = useRef<MapType>();
+
     const [origin, setOrigin] = useState<ICityCountryPair | null>(null);
-	const [originLatLng, setOriginLatLng] = useState<LatLng>();
 
     const [destination, setDestination] = useState<ICityCountryPair | null>(null);
-	const [destinationLatLng, setDestinationLatLng] = useState<LatLng>();
     
 	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
 
@@ -24,8 +26,7 @@ export default function Explore() {
 			});
 
 			const oLatLng = await getLatLng(geoCode[0]);
-			console.log(oLatLng);
-			setOriginLatLng(oLatLng);
+			mapRef.current?.panTo(oLatLng);
 		}
 	}
 
@@ -38,8 +39,7 @@ export default function Explore() {
 			});
 
 			const dLatLng = await getLatLng(geoCode[0]);
-			console.log(dLatLng);
-			setDestinationLatLng(dLatLng);
+			mapRef.current?.panTo(dLatLng);
 		}
 	}
 
@@ -85,7 +85,7 @@ export default function Explore() {
 					)}
 				/>
 			</div>
-			<Map />
+			<Map ref={mapRef as RefObject<MapType>} />
 		</div>
 	);
 }
