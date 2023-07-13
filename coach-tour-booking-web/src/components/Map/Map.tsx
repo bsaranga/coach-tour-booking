@@ -1,6 +1,5 @@
 import {
 	GoogleMap,
-  GoogleMapProps,
   useLoadScript
 } from "@react-google-maps/api";
 import { memo, useCallback, useMemo, useRef } from "react";

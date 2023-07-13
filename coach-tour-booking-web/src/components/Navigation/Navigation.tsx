@@ -45,10 +45,7 @@ export default function Navigation(props: INavigationProps) {
 		</Tabs>
 	) : (
 		<Box sx={{ width: "100%", maxWidth: 260, bgcolor: "background.paper" }}>
-			<nav style={{
-				boxShadow: "3px 0px 10px rgb(225, 225, 225)",
-				height: "100%",
-			}}>
+			<nav className="navigation_container">
 				<List>
                     {
                         Routes.map(page => (

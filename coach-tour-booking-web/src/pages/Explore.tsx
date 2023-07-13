@@ -68,15 +68,7 @@ export default function Explore() {
 						<TextField {...params} label="Origin" />
 					)}
 				/>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						fontSize: "22px",
-						color: "rgba(128,128,128)",
-                        userSelect: "none",
-					}}
-				>
+				<div className="ltr_arrow">
 					{">"}
 				</div>
 				<Autocomplete
