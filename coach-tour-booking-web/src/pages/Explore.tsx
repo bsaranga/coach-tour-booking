@@ -2,18 +2,21 @@ import { Autocomplete, TextField, Typography } from "@mui/material";
 import LookupService from "../services/LookupService";
 import { RefObject, useEffect, useRef, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
-import { getGeocode, getLatLng } from "use-places-autocomplete";
+import { LatLng, getGeocode, getLatLng } from "use-places-autocomplete";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Map from "../components/Map/Map";
 import { Map as MapType } from "../components/Map/Map";
+import { Marker } from "@react-google-maps/api";
 
 export default function Explore() {
 
 	const mapRef = useRef<MapType>();
 
     const [origin, setOrigin] = useState<ICityCountryPair | null>(null);
-
+	const [originCoords, setOriginCoords] = useState<LatLng>();
+	
     const [destination, setDestination] = useState<ICityCountryPair | null>(null);
+	const [destinationCoords, setDestinationCoords] = useState<LatLng>();
     
 	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
 
@@ -26,6 +29,7 @@ export default function Explore() {
 			});
 
 			const oLatLng = await getLatLng(geoCode[0]);
+			setOriginCoords(oLatLng);
 			mapRef.current?.panTo(oLatLng);
 		}
 	}
@@ -39,6 +43,7 @@ export default function Explore() {
 			});
 
 			const dLatLng = await getLatLng(geoCode[0]);
+			setDestinationCoords(dLatLng);
 			mapRef.current?.panTo(dLatLng);
 		}
 	}
@@ -85,7 +90,13 @@ export default function Explore() {
 					)}
 				/>
 			</div>
-			<Map ref={mapRef as RefObject<MapType>} />
+			<Map ref={mapRef as RefObject<MapType>}>
+				<>
+				{
+					originCoords && <Marker position={originCoords}/>
+				}
+				</>
+			</Map>
 		</div>
 	);
 }
