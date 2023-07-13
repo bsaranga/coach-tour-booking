@@ -6,14 +6,11 @@ import IViewState from './interfaces/AppState/IViewState';
 import { Outlet } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import "./pages/Pages.css"
+import { footerNotice } from './app_data/AllText';
 
 function App() {
   
-  const [viewState, setViewState] = useState<IViewState>({
-    isDesktop: true,
-    isMobile: false,
-    isTablet: false,
-  })
+  const [viewState, setViewState] = useState<IViewState>({ screenSize: 'desktop'})
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('(max-width: 767px)');
@@ -26,11 +23,7 @@ function App() {
     desktopQuery.addEventListener("change", handleDesktopChange);
 
     setViewState(() => {
-      return {
-        isMobile: mobileQuery.matches,
-        isTablet: tabletQuery.matches,
-        isDesktop: desktopQuery.matches,
-      }
+      return { screenSize: mobileQuery.matches ? 'mobile' : tabletQuery.matches ? 'tablet' : 'desktop'}
     })
 
     return () => {
@@ -45,8 +38,7 @@ function App() {
     const mql = event.currentTarget as MediaQueryList;
     setViewState(vs => {
       return {
-        ...vs,
-        isMobile: mql.matches,
+        screenSize: mql.matches ? 'mobile' : 'tablet'
       }
     })
   }
@@ -55,8 +47,7 @@ function App() {
     const mql = event.currentTarget as MediaQueryList;
     setViewState(vs => {
       return {
-        ...vs,
-        isTablet: mql.matches,
+        screenSize: mql.matches ? 'tablet' : 'mobile'
       }
     })
   }
@@ -65,10 +56,15 @@ function App() {
     const mql = event.currentTarget as MediaQueryList;
     setViewState(vs => {
       return {
-        ...vs,
-        isDesktop: mql.matches,
+        screenSize: mql.matches ? 'desktop' : 'tablet'
       }
     })
+  }
+
+  const footerFontSizes = {
+    "desktop": 9,
+    "tablet": 8,
+    "mobile": 6
   }
 
   return (
@@ -77,12 +73,12 @@ function App() {
       <div className="content_area">
         <Navigation viewState={viewState} />
         <div className='app_view'>
-          <Outlet/>
+          <Outlet context={viewState as IViewState}/>
         </div>
       </div>
       <div className='footer_area'>
-        <Typography variant='caption' color={'grey'} fontSize={viewState.isMobile ? 6 : viewState.isTablet ? 8 : 10} align='center'>
-          © 2022 EU Coach Travel. All rights reserved. Prices subject to change according to prevailing exchange rates. All journeys subject to local traffic conditions and regulations. ID verification required for travel. Service may change due to unforeseen circumstances. EU Coach Travel complies with GDPR and related European Union privacy legislation.
+        <Typography variant='caption' color={'grey'} fontSize={footerFontSizes[viewState.screenSize]} align='center'>
+          {footerNotice}
         </Typography>
       </div>
     </div>

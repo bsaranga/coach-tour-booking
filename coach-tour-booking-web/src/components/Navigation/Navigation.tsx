@@ -13,6 +13,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { INavigationProps } from "../../interfaces/Common/INavigationProps";
 import Routes from "../../configuration/Routes";
 
+type IResponsiveVariant = {
+	mobile: 'standard' | 'scrollable' | 'fullWidth',
+	tablet: 'standard' | 'scrollable' | 'fullWidth',
+	desktop: 'standard' | 'scrollable' | 'fullWidth'
+}
+
 export default function Navigation(props: INavigationProps) {
 	const { viewState } = props;
 	const [tabValue, setTabValue] = useState(0);
@@ -21,12 +27,18 @@ export default function Navigation(props: INavigationProps) {
 		setTabValue(tabVal);
 	}
 
-	return !viewState.isDesktop ? (
+	const responsiveVariant: IResponsiveVariant = {
+		mobile: "scrollable",
+		tablet: "standard",
+		desktop: "fullWidth"
+	}
+
+	return (viewState.screenSize !== 'desktop') ? (
 		<Tabs value={tabValue}
             onChange={handleChange}
-            variant={viewState.isTablet ? "standard" : "scrollable"}
-            centered={viewState.isTablet}
-			allowScrollButtonsMobile={viewState.isMobile}>
+            variant={responsiveVariant[viewState.screenSize]}
+            centered={viewState.screenSize === 'tablet'}
+			allowScrollButtonsMobile={viewState.screenSize === 'mobile'}>
             {
                 Routes.map(page => <Tab sx={{ textTransform: "none" }} key={page.key} label={page.value} {...{component: RouterLink, to: page.attr.pathName}} />)
             }

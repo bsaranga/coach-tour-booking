@@ -1,7 +1,5 @@
 interface IViewState {
-    isMobile: boolean;
-    isTablet: boolean;
-    isDesktop: boolean;
+    screenSize: 'desktop' | 'tablet' | 'mobile'
 }
 
 export default IViewState;
