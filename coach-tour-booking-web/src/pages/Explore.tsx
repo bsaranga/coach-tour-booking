@@ -13,10 +13,10 @@ export default function Explore() {
 	const mapRef = useRef<MapType>();
 
     const [origin, setOrigin] = useState<ICityCountryPair | null>(null);
-	const [originCoords, setOriginCoords] = useState<LatLng>();
+	const [originCoords, setOriginCoords] = useState<LatLng | null>();
 	
     const [destination, setDestination] = useState<ICityCountryPair | null>(null);
-	const [destinationCoords, setDestinationCoords] = useState<LatLng>();
+	const [destinationCoords, setDestinationCoords] = useState<LatLng | null>();
     
 	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
 
@@ -31,7 +31,7 @@ export default function Explore() {
 			const oLatLng = await getLatLng(geoCode[0]);
 			setOriginCoords(oLatLng);
 			mapRef.current?.panTo(oLatLng);
-		}
+		} else setOriginCoords(null);
 	}
 
 	async function initializeDestination(cityCountryPair: ICityCountryPair|null) {
@@ -45,7 +45,7 @@ export default function Explore() {
 			const dLatLng = await getLatLng(geoCode[0]);
 			setDestinationCoords(dLatLng);
 			mapRef.current?.panTo(dLatLng);
-		}
+		} else setDestinationCoords(null);
 	}
 
     useEffect(() => {
@@ -92,9 +92,8 @@ export default function Explore() {
 			</div>
 			<Map ref={mapRef as RefObject<MapType>}>
 				<>
-				{
-					originCoords && <Marker position={originCoords}/>
-				}
+					<Marker visible={originCoords != null} position={originCoords as LatLng} label={'O'} />
+					<Marker visible={destinationCoords != null} position={destinationCoords as LatLng} label={'D'}/>
 				</>
 			</Map>
 		</div>
