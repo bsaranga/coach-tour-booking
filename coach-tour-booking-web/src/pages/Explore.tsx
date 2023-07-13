@@ -3,11 +3,44 @@ import LookupService from "../services/LookupService";
 import { useEffect, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
 import Map from "../components/Map/Map";
+import { LatLng, getGeocode, getLatLng } from "use-places-autocomplete";
 
 export default function Explore() {
     const [origin, setOrigin] = useState<ICityCountryPair | null>(null);
+	const [originLatLng, setOriginLatLng] = useState<LatLng>();
+
     const [destination, setDestination] = useState<ICityCountryPair | null>(null);
-    const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
+	const [destinationLatLng, setDestinationLatLng] = useState<LatLng>();
+    
+	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
+
+	async function initializeOrigin(cityCountryPair: ICityCountryPair|null) {
+		setOrigin(cityCountryPair);
+
+		if (cityCountryPair != null) {
+			const geoCode = await getGeocode({
+				address: `${cityCountryPair?.city}, ${cityCountryPair?.country}`
+			});
+
+			const oLatLng = await getLatLng(geoCode[0]);
+			console.log(oLatLng);
+			setOriginLatLng(oLatLng);
+		}
+	}
+
+	async function initializeDestination(cityCountryPair: ICityCountryPair|null) {
+		setDestination(cityCountryPair);
+
+		if (cityCountryPair != null) {
+			const geoCode = await getGeocode({
+				address: `${cityCountryPair?.city}, ${cityCountryPair?.country}`
+			});
+
+			const dLatLng = await getLatLng(geoCode[0]);
+			console.log(dLatLng);
+			setDestinationLatLng(dLatLng);
+		}
+	}
 
     useEffect(() => {
         async function fetchEUCountries() {
@@ -30,7 +63,7 @@ export default function Explore() {
 					getOptionLabel={(c) => c.city}
 					sx={{ width: 165 }}
 					size="small"
-					onChange={(event, value) => setOrigin(value)}
+					onChange={(event, value) => initializeOrigin(value)}
 					renderInput={(params) => (
 						<TextField {...params} label="Origin" />
 					)}
@@ -53,7 +86,7 @@ export default function Explore() {
 					getOptionLabel={(c) => c.city}
 					sx={{ width: 165 }}
 					size="small"
-					onChange={(event, value) => setDestination(value)}
+					onChange={(event, value) => initializeDestination(value)}
 					renderInput={(params) => (
 						<TextField {...params} label="Destination" />
 					)}
