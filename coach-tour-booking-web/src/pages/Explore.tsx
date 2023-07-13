@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
 import Map from "../components/Map/Map";
 import { LatLng, getGeocode, getLatLng } from "use-places-autocomplete";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function Explore() {
     const [origin, setOrigin] = useState<ICityCountryPair | null>(null);
@@ -69,7 +70,7 @@ export default function Explore() {
 					)}
 				/>
 				<div className="ltr_arrow">
-					{">"}
+					<ArrowForwardIcon/>
 				</div>
 				<Autocomplete
 					id="grouped-demo"

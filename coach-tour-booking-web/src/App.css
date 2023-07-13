@@ -37,9 +37,7 @@
 .ltr_arrow {
     display: flex;
     align-items: center;
-    font-size: 22px;
     color: rgba(128,128,128);
-    user-select: none;
 }
 
 /* Mobile devices (up to 767px) */

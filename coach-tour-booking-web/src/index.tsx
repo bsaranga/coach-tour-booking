@@ -9,6 +9,8 @@ import '@fontsource/roboto/500.css';
 import "@fontsource/roboto/700.css";
 import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Routes from './configuration/Routes';
+import { Provider } from 'react-redux';
+import Store from './store/Store';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +32,9 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <RouterProvider router={router}></RouterProvider>
+  <Provider store={Store}>
+    <RouterProvider router={router}></RouterProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
