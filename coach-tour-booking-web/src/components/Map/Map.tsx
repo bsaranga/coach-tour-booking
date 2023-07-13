@@ -1,22 +1,33 @@
-import { useEffect, useRef } from "react"
+import {
+	GoogleMap,
+	LoadScript,
+	useLoadScript,
+} from "@react-google-maps/api";
+import { memo, useEffect } from "react";
 
-export default function Map() {
+const containerStyle = {
+	width: "400px",
+	height: "400px",
+};
 
-    const mapRef = useRef<HTMLDivElement>(null);
-    let map: any;
-    
-    useEffect(() => {
-        
-        async function initMap(): Promise<void> {
-            const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-            map = new Map(mapRef.current as HTMLDivElement, {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-        });
-        }
+const center = {
+	lat: -3.745,
+	lng: -38.523,
+};
 
-        initMap();
-    }, [])
-
-    return <div ref={mapRef}>Map</div>
+const mapFunction = function Map() {
+	return <LoadScript
+      googleMapsApiKey="AIzaSyCXnAwt1CIxspRegyw_wdNq3OMVSidKWLE"
+    >
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+      >
+        { /* Child components, such as markers, info windows, etc. */ }
+        <></>
+      </GoogleMap>
+    </LoadScript>
 }
+
+export default memo(mapFunction);
