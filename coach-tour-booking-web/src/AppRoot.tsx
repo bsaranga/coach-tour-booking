@@ -7,6 +7,7 @@ import { Outlet } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import "./pages/Pages.css"
 import { footerNotice } from './app_data/AllText';
+import Toast from './components/Toast/Toast';
 
 function App() {
   
@@ -69,6 +70,7 @@ function App() {
 
   return (
     <div className="main_container">
+      <Toast/>
       <AppHeader/>
       <div className="content_area">
         <Navigation viewState={viewState} />
