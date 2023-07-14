@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Divider, List, ListItem, TextField, Typography } from "@mui/material";
+import { Autocomplete, Button, Divider, TextField, Typography } from "@mui/material";
 import LookupService from "../services/LookupService";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";

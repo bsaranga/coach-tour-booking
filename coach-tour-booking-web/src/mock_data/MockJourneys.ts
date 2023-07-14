@@ -5,6 +5,7 @@ const mockRouteInfo: IRouteCard[] = [
 	{
 		startCity: "Graz",
 		endCity: "Salzburg",
+		routeName: "Lakeside Route",
 		distance: 765,
 		distanceUnit: "km",
 		journeyDate: "17/07/2023",
@@ -14,6 +15,7 @@ const mockRouteInfo: IRouteCard[] = [
     {
 		startCity: "Graz",
 		endCity: "Salzburg",
+		routeName: "Lakeside Route",
 		distance: 765,
 		distanceUnit: "km",
 		journeyDate: "17/07/2023",
@@ -23,6 +25,7 @@ const mockRouteInfo: IRouteCard[] = [
     {
 		startCity: "Graz",
 		endCity: "Salzburg",
+		routeName: "Lakeside Route",
 		distance: 765,
 		distanceUnit: "km",
 		journeyDate: "17/07/2023",
@@ -32,6 +35,7 @@ const mockRouteInfo: IRouteCard[] = [
     {
 		startCity: "Graz",
 		endCity: "Salzburg",
+		routeName: "Lakeside Route",
 		distance: 765,
 		distanceUnit: "km",
 		journeyDate: "17/07/2023",
@@ -41,6 +45,7 @@ const mockRouteInfo: IRouteCard[] = [
     {
 		startCity: "Graz",
 		endCity: "Salzburg",
+		routeName: "Lakeside Route",
 		distance: 765,
 		distanceUnit: "km",
 		journeyDate: "17/07/2023",
