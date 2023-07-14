@@ -28,10 +28,12 @@ export default function RouteCard(props: IRouteCard) {
             </Typography>
             <Box sx={{
                 display: "flex",
-                gap: "4px"
+                gap: "4px",
+                flexWrap: 'wrap'
             }}>
                 <Chip size='small' label={`${distance} ${distanceUnit}`} />
                 <Chip size='small' label={travelTime} />
+                <Chip size='small' label={"10 seats available"} />
             </Box>
         </CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>

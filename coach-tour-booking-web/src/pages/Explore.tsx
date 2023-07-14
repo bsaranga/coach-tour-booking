@@ -95,7 +95,7 @@ export default function Explore() {
 		<div className="vertical-flex-container">
 			<Typography variant="h5">{pageTexts.explore.title}</Typography>
 			<Typography variant="body2">{pageTexts.explore.subTitle}</Typography>
-			<div className="horizontal-flex-container">
+			<div className="explore-toolbar">
 				<Autocomplete
 					id="grouped-demo"
 					options={euCountries.filter((c) => c !== destination)}

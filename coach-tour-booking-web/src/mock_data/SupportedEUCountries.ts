@@ -109,11 +109,13 @@ const SupportedEUCountries: IEUMember[] = [
 
 const SupportedEUCountriesMixedArray = SupportedEUCountries.map(el => {
     const subList: ICityCountryPair[] = [];
-    el.cities.forEach(city => {
-        subList.push({
-            city: city,
-            country: el.country
-        })
+    el.cities.forEach((city, i) => {
+        if (i % 3 === 0) {
+            subList.push({
+                city: city,
+                country: el.country
+            })
+        }
     });
 
     return subList;

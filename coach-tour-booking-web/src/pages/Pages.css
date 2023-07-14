@@ -1,11 +1,19 @@
 .vertical-flex-container {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
+    height: 100%;
 }
 
 .horizontal-flex-container {
     display: flex;
     gap: 1rem;
     justify-content: center;
+    height: 470px;
+}
+
+.explore-toolbar {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;   
 }
