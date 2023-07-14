@@ -124,7 +124,7 @@ export default function Explore() {
 					)}
 				/>
 				<Divider orientation="vertical" variant="middle" flexItem />
-				<DatePicker disablePast={true} formatDensity="spacious" label="Starting from" slotProps={{
+				<DatePicker onChange={(d: Dayjs | null) => { setStartDate(d) }} maxDate={endDate?.add(-1, 'day')} disablePast={true} formatDensity="spacious" label="Starting from" slotProps={{
 					textField: {
 						sx: {
 							width: '210px'
@@ -135,7 +135,7 @@ export default function Explore() {
 				<div className="ltr_arrow">
 					<ArrowForwardIcon/>
 				</div>
-				<DatePicker disablePast={true} formatDensity="spacious" label="Until" slotProps={{
+				<DatePicker onChange={(d: Dayjs | null) => { setEndDate(d) }} minDate={startDate?.add(1, 'day')} disablePast={true} formatDensity="spacious" label="Until" slotProps={{
 					textField: {
 						sx: {
 							width: '210px'
