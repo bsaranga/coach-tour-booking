@@ -44,7 +44,7 @@ export default function Navigation(props: INavigationProps) {
             }
 		</Tabs>
 	) : (
-		<Box sx={{ width: "100%", maxWidth: 260, bgcolor: "background.paper" }}>
+		<Box sx={{ width: "100%", maxWidth: 230, bgcolor: "background.paper" }}>
 			<nav className="navigation_container">
 				<List>
                     {
@@ -56,7 +56,14 @@ export default function Navigation(props: INavigationProps) {
 								selected={tabValue === page.key}
 								{...{component: RouterLink, to: page.attr.pathName}}
 								>
-								 <ListItemText key={page.key} primary={page.value} />
+									<Box sx={{
+										display: "flex",
+										gap: "0.5rem",
+										alignItems: 'center'
+									}}>
+										{ page.attr.iconComponent }
+										<ListItemText key={page.key} primary={page.value} />
+									</Box>
 							</ListItemButton>
 						</ListItem>))
                     }

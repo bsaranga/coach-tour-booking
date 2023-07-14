@@ -6,5 +6,6 @@ export interface INavigationProps {
 
 export interface IRoute {
 	pathName: string;
-	component?: JSX.Element
+	component?: JSX.Element;
+	iconComponent?: JSX.Element;
 }

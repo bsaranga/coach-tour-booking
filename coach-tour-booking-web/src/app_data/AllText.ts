@@ -2,6 +2,6 @@ export const footerNotice = '© 2022 EU Coach Travel. All rights reserved. Price
 export const pageTexts = {
     explore: {
         title: "Explore",
-        subTitle: "Choose a desired Origin and Destination to view journeys and routes that are available in the selected date range."
+        subTitle: "Select your preferred starting point and destination to explore the array of journeys and routes accessible within the chosen date range."
     }
 }

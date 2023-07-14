@@ -1,4 +1,4 @@
-import { Autocomplete, Divider, TextField, Typography } from "@mui/material";
+import { Autocomplete, Divider, IconButton, TextField, Typography } from "@mui/material";
 import LookupService from "../services/LookupService";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
@@ -10,6 +10,7 @@ import { DirectionsRenderer, Marker } from "@react-google-maps/api";
 import { pageTexts } from "../app_data/AllText";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
+import SearchIcon from '@mui/icons-material/Search';
 
 type Direction = google.maps.DirectionsResult;
 
@@ -121,36 +122,48 @@ export default function Explore() {
 					)}
 				/>
 				<Divider orientation="vertical" variant="middle" flexItem />
-				<DatePicker disablePast={true} formatDensity="spacious" label="Start Date" slotProps={{
+				<DatePicker disablePast={true} formatDensity="spacious" label="Starting from" slotProps={{
 					textField: {
+						sx: {
+							width: '210px'
+						},
 						size: 'small',
 					}
 				}} />
 				<div className="ltr_arrow">
 					<ArrowForwardIcon/>
 				</div>
-				<DatePicker disablePast={true} formatDensity="spacious" label="End Date" slotProps={{
+				<DatePicker disablePast={true} formatDensity="spacious" label="Until" slotProps={{
 					textField: {
+						sx: {
+							width: '210px'
+						},
 						size: 'small',
 					}
 				}} />
+				<Divider orientation="vertical" variant="middle" flexItem />
+				<IconButton>
+					<SearchIcon/>
+				</IconButton>
 			</div>
-			<Map ref={mapRef as RefObject<MapType>}>
-				<>
-					<Marker visible={originCoords != null} position={originCoords as LatLng} />
-					<Marker visible={destinationCoords != null} position={destinationCoords as LatLng} />
-					{
-						directions && <DirectionsRenderer options={
-							{
-								polylineOptions: {
-									strokeColor: "#78ba14",
-									strokeWeight: 3,
+			<div className="horizontal-flex-container">
+				<Map ref={mapRef as RefObject<MapType>}>
+					<>
+						<Marker visible={originCoords != null} position={originCoords as LatLng} />
+						<Marker visible={destinationCoords != null} position={destinationCoords as LatLng} />
+						{
+							directions && <DirectionsRenderer options={
+								{
+									polylineOptions: {
+										strokeColor: "#78ba14",
+										strokeWeight: 3,
+									}
 								}
-							}
-						} directions={directions} />
-					}
-				</>
-			</Map>
+							} directions={directions} />
+						}
+					</>
+				</Map>
+			</div>
 		</div>
 	);
 }
