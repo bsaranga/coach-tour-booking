@@ -1,4 +1,4 @@
-import { Autocomplete, Divider, IconButton, TextField, Typography } from "@mui/material";
+import { Autocomplete, Button, Divider, List, ListItem, TextField, Typography } from "@mui/material";
 import LookupService from "../services/LookupService";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
@@ -11,6 +11,8 @@ import { pageTexts } from "../app_data/AllText";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import SearchIcon from '@mui/icons-material/Search';
+import RouteList from "../components/JourneyRoutes/RouteList";
+import mockRoutes from "../mock_data/MockJourneys";
 
 type Direction = google.maps.DirectionsResult;
 
@@ -142,18 +144,17 @@ export default function Explore() {
 					}
 				}} />
 				<Divider orientation="vertical" variant="middle" flexItem />
-				<IconButton>
-					<SearchIcon/>
-				</IconButton>
+				<Button variant="outlined" endIcon={<SearchIcon/>} size="medium">Search</Button>
 			</div>
 			<div className="horizontal-flex-container">
 				<Map ref={mapRef as RefObject<MapType>}>
 					<>
-						<Marker visible={originCoords != null} position={originCoords as LatLng} />
-						<Marker visible={destinationCoords != null} position={destinationCoords as LatLng} />
+						<Marker visible={originCoords != null && directions == null} position={originCoords as LatLng} />
+						<Marker visible={destinationCoords != null && directions == null} position={destinationCoords as LatLng} />
 						{
 							directions && <DirectionsRenderer options={
 								{
+									draggable: true,
 									polylineOptions: {
 										strokeColor: "#78ba14",
 										strokeWeight: 3,
@@ -163,6 +164,8 @@ export default function Explore() {
 						}
 					</>
 				</Map>
+				<Divider orientation="vertical" variant="middle" flexItem />
+				<RouteList routeInfo={mockRoutes}/>
 			</div>
 		</div>
 	);
