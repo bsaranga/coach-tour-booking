@@ -7,6 +7,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Map from "../components/Map/Map";
 import { Map as MapType } from "../components/Map/Map";
 import { DirectionsRenderer, Marker } from "@react-google-maps/api";
+import { pageTexts } from "../app_data/AllText";
 
 type Direction = google.maps.DirectionsResult;
 
@@ -85,7 +86,8 @@ export default function Explore() {
 
     return (
 		<div className="vertical-flex-container">
-			<Typography variant="h5">Explore</Typography>
+			<Typography variant="h5">{pageTexts.explore.title}</Typography>
+			<Typography variant="body2">{pageTexts.explore.subTitle}</Typography>
 			<div className="horizontal-flex-container">
 				<Autocomplete
 					id="grouped-demo"
@@ -120,7 +122,14 @@ export default function Explore() {
 					<Marker visible={originCoords != null} position={originCoords as LatLng} />
 					<Marker visible={destinationCoords != null} position={destinationCoords as LatLng} />
 					{
-						directions && <DirectionsRenderer directions={directions} />
+						directions && <DirectionsRenderer options={
+							{
+								polylineOptions: {
+									strokeColor: "#78ba14",
+									strokeWeight: 3,
+								}
+							}
+						} directions={directions} />
 					}
 				</>
 			</Map>

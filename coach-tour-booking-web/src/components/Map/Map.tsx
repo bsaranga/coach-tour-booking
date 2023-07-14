@@ -26,8 +26,8 @@ const mapFunction = forwardRef<Map, PropsWithChildren>(function Map(props, ref: 
 
   const containerStyle = useMemo(() => {
     const desktopSize = {
-      width: "640px",
-      height: "480px",
+      width: "1150px",
+      height: "470px",
     }
 
     const mobileSize = {
