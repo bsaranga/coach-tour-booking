@@ -1,6 +1,7 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import euroBusLogo from '../../img/euro-bus-logo.png'
 import AccountMenu from "../Account/AccountMenu";
+import Notifications from "../Notifications/Notifications";
 
 export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
     return (
@@ -12,6 +13,7 @@ export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
                         <Typography data-testid="appname" variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             EuroBus
                         </Typography>
+                        <Notifications/>
                         <AccountMenu/>
                     </Toolbar>
                 </AppBar>
