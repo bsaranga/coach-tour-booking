@@ -11,6 +11,8 @@ import { RouteObject, RouterProvider, createBrowserRouter } from 'react-router-d
 import Routes from './configuration/Routes';
 import { Provider } from 'react-redux';
 import Store from './store/Store';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const router = createBrowserRouter([
   {
@@ -33,7 +35,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={Store}>
-    <RouterProvider router={router}></RouterProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <RouterProvider router={router}></RouterProvider>
+    </LocalizationProvider>
   </Provider>
 );
 

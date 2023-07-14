@@ -1,4 +1,4 @@
-import { Autocomplete, TextField, Typography } from "@mui/material";
+import { Autocomplete, Divider, TextField, Typography } from "@mui/material";
 import LookupService from "../services/LookupService";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
@@ -8,6 +8,8 @@ import Map from "../components/Map/Map";
 import { Map as MapType } from "../components/Map/Map";
 import { DirectionsRenderer, Marker } from "@react-google-maps/api";
 import { pageTexts } from "../app_data/AllText";
+import { Dayjs } from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers";
 
 type Direction = google.maps.DirectionsResult;
 
@@ -22,8 +24,10 @@ export default function Explore() {
 	const [destinationCoords, setDestinationCoords] = useState<LatLng | null>();
 
 	const [directions, setDirections] = useState<Direction | null>();
-    
 	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
+
+	const [startDate, setStartDate] = useState<Dayjs | null>(null);
+	const [endDate, setEndDate] = useState<Dayjs | null>(null);
 
 	async function initializeOrigin(cityCountryPair: ICityCountryPair|null) {
 		setOrigin(cityCountryPair);
@@ -94,7 +98,7 @@ export default function Explore() {
 					options={euCountries.filter((c) => c !== destination)}
 					groupBy={(c) => c.country}
 					getOptionLabel={(c) => c.city}
-					sx={{ width: 165 }}
+					sx={{ width: 200 }}
 					size="small"
 					onChange={(event, value) => initializeOrigin(value)}
 					renderInput={(params) => (
@@ -109,13 +113,27 @@ export default function Explore() {
 					options={euCountries.filter((c) => c !== origin)}
 					groupBy={(c) => c.country}
 					getOptionLabel={(c) => c.city}
-					sx={{ width: 165 }}
+					sx={{ width: 200 }}
 					size="small"
 					onChange={(event, value) => initializeDestination(value)}
 					renderInput={(params) => (
 						<TextField {...params} label="Destination" />
 					)}
 				/>
+				<Divider orientation="vertical" variant="middle" flexItem />
+				<DatePicker disablePast={true} formatDensity="spacious" label="Start Date" slotProps={{
+					textField: {
+						size: 'small',
+					}
+				}} />
+				<div className="ltr_arrow">
+					<ArrowForwardIcon/>
+				</div>
+				<DatePicker disablePast={true} formatDensity="spacious" label="End Date" slotProps={{
+					textField: {
+						size: 'small',
+					}
+				}} />
 			</div>
 			<Map ref={mapRef as RefObject<MapType>}>
 				<>
