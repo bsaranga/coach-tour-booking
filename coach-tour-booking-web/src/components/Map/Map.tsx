@@ -5,6 +5,8 @@ import {
 import { ForwardedRef, MutableRefObject, PropsWithChildren, forwardRef, memo, useCallback, useEffect, useMemo } from "react";
 import { useOutletContext } from "react-router-dom";
 import IViewState from "../../interfaces/AppState/IViewState";
+import { CircularProgress } from "@mui/material";
+import './Map.css'
 
 export type LatLngLiteral = google.maps.LatLngAltitudeLiteral;
 export type MapOptions = google.maps.MapOptions;
@@ -63,7 +65,10 @@ const mapFunction = forwardRef<Map, PropsWithChildren>(function Map(props, ref: 
     }, 1000);
   }, []);
 
-  if (!isLoaded) return <div>Loading...</div>
+  if (!isLoaded) 
+    return <div className="progress-indicator">
+      <CircularProgress />
+    </div>
   return <div>
     <GoogleMap
         mapContainerStyle={containerStyle}
