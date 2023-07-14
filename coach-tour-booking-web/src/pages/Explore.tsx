@@ -1,6 +1,6 @@
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import LookupService from "../services/LookupService";
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
 import { LatLng, getGeocode, getLatLng } from "use-places-autocomplete";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -52,14 +52,12 @@ export default function Explore() {
 		} else setDestinationCoords(null);
 	}
 
-	async function getDirections(originPos: LatLng, destinationPos: LatLng) {
-		console.log(originPos)
-		console.log(destinationPos)
+	const getDirections = useCallback(async () => {
 		const directionsService = new google.maps.DirectionsService();
 		await directionsService.route(
 			{
-				origin: originPos,
-				destination: destinationPos,
+				origin: originCoords as LatLng,
+				destination: destinationCoords as LatLng,
 				travelMode: google.maps.TravelMode.DRIVING
 			}, (result, status) => {
 				if (status === google.maps.DirectionsStatus.OK) {
@@ -67,7 +65,13 @@ export default function Explore() {
 				}
 			}
 		)
-	}
+	}, [originCoords, destinationCoords])
+
+	useEffect(() => {
+		if (originCoords != null && destinationCoords != null) {
+			getDirections()
+		}
+	}, [originCoords, destinationCoords, getDirections])
 
     useEffect(() => {
         async function fetchEUCountries() {
@@ -105,7 +109,7 @@ export default function Explore() {
 					getOptionLabel={(c) => c.city}
 					sx={{ width: 165 }}
 					size="small"
-					onChange={(event, value) => initializeDestination(value).then(() => getDirections(originCoords as LatLng, destinationCoords as LatLng))}
+					onChange={(event, value) => initializeDestination(value)}
 					renderInput={(params) => (
 						<TextField {...params} label="Destination" />
 					)}
@@ -113,8 +117,8 @@ export default function Explore() {
 			</div>
 			<Map ref={mapRef as RefObject<MapType>}>
 				<>
-					<Marker visible={originCoords != null} position={originCoords as LatLng} label={'O'} />
-					<Marker visible={destinationCoords != null} position={destinationCoords as LatLng} label={'D'}/>
+					<Marker visible={originCoords != null} position={originCoords as LatLng} />
+					<Marker visible={destinationCoords != null} position={destinationCoords as LatLng} />
 					{
 						directions && <DirectionsRenderer directions={directions} />
 					}

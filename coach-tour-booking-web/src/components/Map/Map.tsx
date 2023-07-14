@@ -39,7 +39,7 @@ const mapFunction = forwardRef<Map, PropsWithChildren>(function Map(props, ref: 
 
   }, [context.screenSize]);
 
-  const center = useMemo<LatLngLiteral>(() => {
+  const defaultCenter = useMemo<LatLngLiteral>(() => {
     return {
       altitude: 0,
       lat: 47.070714, 
@@ -55,16 +55,6 @@ const mapFunction = forwardRef<Map, PropsWithChildren>(function Map(props, ref: 
     }
   }, [])
 
-  // map move experiment
-  useEffect(() => {
-    setTimeout(() => {
-      mapRef.current?.panTo({
-        lat: 48.2081743,
-        lng: 16.3738189,
-      })
-    }, 1000);
-  }, []);
-
   if (!isLoaded) 
     return <div className="progress-indicator">
       <CircularProgress />
@@ -72,7 +62,7 @@ const mapFunction = forwardRef<Map, PropsWithChildren>(function Map(props, ref: 
   return <div>
     <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
+        center={defaultCenter}
         zoom={9}
         options={mapOptions}
         onLoad={onLoad}
