@@ -13,6 +13,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import SearchIcon from '@mui/icons-material/Search';
 import RouteList from "../components/JourneyRoutes/RouteList";
 import mockRoutes from "../mock_data/MockJourneys";
+import './Explore.css'
 
 type Direction = google.maps.DirectionsResult;
 
@@ -126,9 +127,7 @@ export default function Explore() {
 				<Divider orientation="vertical" variant="middle" flexItem />
 				<DatePicker onChange={(d: Dayjs | null) => { setStartDate(d) }} maxDate={endDate?.add(-1, 'day')} disablePast={true} formatDensity="spacious" label="Starting from" slotProps={{
 					textField: {
-						sx: {
-							width: '210px'
-						},
+						sx: { width: '210px' },
 						size: 'small',
 					}
 				}} />
@@ -137,9 +136,7 @@ export default function Explore() {
 				</div>
 				<DatePicker onChange={(d: Dayjs | null) => { setEndDate(d) }} minDate={startDate?.add(1, 'day')} disablePast={true} formatDensity="spacious" label="Until" slotProps={{
 					textField: {
-						sx: {
-							width: '210px'
-						},
+						sx: { width: '210px' },
 						size: 'small',
 					}
 				}} />

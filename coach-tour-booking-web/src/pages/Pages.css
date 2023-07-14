@@ -1,3 +1,7 @@
+/*
+Styles common to all pages
+*/
+
 .vertical-flex-container {
     display: flex;
     flex-direction: column;
@@ -10,10 +14,4 @@
     gap: 1rem;
     justify-content: center;
     height: 470px;
-}
-
-.explore-toolbar {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;   
 }

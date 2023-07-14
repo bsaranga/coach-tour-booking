@@ -1,4 +1,5 @@
 export default interface IRouteCard {
+    routeId: string,
     startCity: string,
     endCity: string,
     routeName: string,
