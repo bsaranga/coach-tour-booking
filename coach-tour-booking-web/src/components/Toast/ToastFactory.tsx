@@ -29,7 +29,11 @@ export default function ToastFactory() {
                         <Snackbar
                         key={toast.toastId}
                         open={toast.isOpen}
-                        autoHideDuration={1000}
+                        anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right'
+                        }}
+                        autoHideDuration={1500}
                         onClose={() => { handleToastClose(toast.toastId); }}
                         >
                             <Alert severity={toast.type} sx={{ width: '100%' }}>
