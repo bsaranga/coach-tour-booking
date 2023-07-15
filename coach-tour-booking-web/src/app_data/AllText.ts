@@ -3,5 +3,9 @@ export const pageTexts = {
     explore: {
         title: "Explore",
         subTitle: "Select your preferred starting point and destination to explore the array of journeys and routes accessible within the chosen date range."
+    },
+    bookings: {
+        title: "Bookings",
+        subTitle: "Book the journey for your selected route."
     }
 }
