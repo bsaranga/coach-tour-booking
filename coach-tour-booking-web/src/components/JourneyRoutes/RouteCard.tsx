@@ -9,9 +9,12 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import IRouteCard from './IRouteCard';
 import { useAppDispatch, useAppSelector } from '../../store/Hooks';
 import { setSelectedRoute } from '../../store/slices/ExploreSlice';
+import { addToast } from '../../store/slices/ToastSlice';
+import { useId } from 'react';
 
 export default function RouteCard(props: IRouteCard) {
-    
+
+    const id = useId()
     const dispatch = useAppDispatch();
     const selectedRouteId = useAppSelector(state => state.explorePage.selectedRoute);
 
@@ -19,6 +22,12 @@ export default function RouteCard(props: IRouteCard) {
 
     function handleSelection() {
         dispatch(setSelectedRoute(routeId));
+        dispatch(addToast({
+            toastId: `${id}`,
+            isOpen: true,
+            message: `${routeName} route selected`,
+            type: "success",
+        }))
     }
 
     return (
