@@ -1,3 +1,6 @@
+import { Waypoint } from "../../pages/Explore/Explore";
+
 export default interface IExplore {
-    selectedRoute?: string
+    selectedRoute?: string,
+    selectedWayPoints?: Waypoint[],
 }

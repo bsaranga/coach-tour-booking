@@ -8,9 +8,10 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import IRouteCard from './IRouteCard';
 import { useAppDispatch, useAppSelector } from '../../store/Hooks';
-import { setSelectedRoute } from '../../store/slices/ExploreSlice';
+import { setSelectedRoute, setSelectedWayPoints } from '../../store/slices/ExploreSlice';
 import { useId } from 'react';
 import showToast from '../../services/ToastService';
+import { Waypoint } from '../../pages/Explore/Explore';
 
 export default function RouteCard(props: IRouteCard) {
 
@@ -18,10 +19,11 @@ export default function RouteCard(props: IRouteCard) {
     const dispatch = useAppDispatch();
     const selectedRouteId = useAppSelector(state => state.explorePage.selectedRoute);
 
-    const { routeId, journeyDate, startCity, routeName, endCity, journeyImgUrl, distance, distanceUnit, travelTime } = props;
+    const { routeId, journeyDate, startCity, routeName, endCity, journeyImgUrl, distance, distanceUnit, travelTime, waypoints } = props;
 
     function handleSelection() {
         dispatch(setSelectedRoute(routeId));
+        dispatch(setSelectedWayPoints(waypoints as Waypoint[]));
         showToast(id, `${routeName} route selected`, 'success', dispatch);
     }
 

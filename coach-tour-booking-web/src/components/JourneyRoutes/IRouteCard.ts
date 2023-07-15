@@ -1,3 +1,5 @@
+import { Waypoint } from "../../pages/Explore/Explore"
+
 export default interface IRouteCard {
     routeId: string,
     startCity: string,
@@ -7,5 +9,6 @@ export default interface IRouteCard {
     distance: number,
     distanceUnit: "km" | "miles",
     travelTime: string
-    journeyImgUrl: string
+    journeyImgUrl: string,
+    waypoints?: Waypoint[]
 }

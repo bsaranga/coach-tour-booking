@@ -12,15 +12,19 @@ import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import SearchIcon from '@mui/icons-material/Search';
 import RouteList from "../../components/JourneyRoutes/RouteList";
-import './Explore.css'
 import JourneyService from "../../services/JourneyService";
 import IRouteCard from "../../components/JourneyRoutes/IRouteCard";
+import './Explore.css'
+import { useAppSelector } from "../../store/Hooks";
 
-type Direction = google.maps.DirectionsResult;
+export type Direction = google.maps.DirectionsResult;
+export type Waypoint = google.maps.DirectionsWaypoint;
 
 export default function Explore() {
 
 	const mapRef = useRef<MapType>();
+
+	const currentWayPoints = useAppSelector(state => state.explorePage.selectedWayPoints);
 
     const [origin, setOrigin] = useState<ICityCountryPair | null>(null);
 	const [originCoords, setOriginCoords] = useState<LatLng | null>();
@@ -66,18 +70,21 @@ export default function Explore() {
 
 	const getDirections = useCallback(async () => {
 		const directionsService = new google.maps.DirectionsService();
+		console.log(originCoords, destinationCoords, currentWayPoints);
 		await directionsService.route(
 			{
 				origin: originCoords as LatLng,
 				destination: destinationCoords as LatLng,
-				travelMode: google.maps.TravelMode.DRIVING
+				travelMode: google.maps.TravelMode.DRIVING,
+				waypoints: currentWayPoints,
+				optimizeWaypoints: true
 			}, (result, status) => {
 				if (status === google.maps.DirectionsStatus.OK) {
 					setDirections(result);
 				}
 			}
 		)
-	}, [originCoords, destinationCoords])
+	}, [originCoords, destinationCoords, currentWayPoints])
 
 	useEffect(() => {
 		if (originCoords != null && destinationCoords != null) {
@@ -114,6 +121,8 @@ export default function Explore() {
 		}
 
 	}, [origin, destination, startDate, endDate])
+
+	const dirRendererRef = useRef<DirectionsRenderer | null>(null);
 
     return (
 		<div className="vertical-flex-container">
@@ -174,13 +183,36 @@ export default function Explore() {
 						{
 							directions && <DirectionsRenderer options={
 								{
-									draggable: true,
+									draggable: false,
 									polylineOptions: {
 										strokeColor: "#78ba14",
 										strokeWeight: 3,
-									}
+									},
 								}
-							} directions={directions} />
+							} directions={directions} ref={dirRendererRef} onDirectionsChanged={() => {
+								/* const directions = dirRendererRef.current?.state.directionsRenderer?.getDirections();
+								const rawWayPts = ((directions as any)?.request.waypoints as any[])?.map(wp => {
+									if (wp != null) {
+										return {
+											lat: wp.location.lat(),
+											lng: wp.location.lng(),
+										}
+									}
+								});
+								const transformedWayPoints = rawWayPts?.map(w => {
+									const reducedWayPt: google.maps.DirectionsWaypoint = {
+										location: {
+											lat: w?.lat,
+											lng: w?.lng,
+										},
+										stopover: false
+									}
+
+									return reducedWayPt;
+								})
+
+								console.log(transformedWayPoints); */
+							}}/>
 						}
 					</>
 				</Map>
