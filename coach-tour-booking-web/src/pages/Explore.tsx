@@ -12,8 +12,9 @@ import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import SearchIcon from '@mui/icons-material/Search';
 import RouteList from "../components/JourneyRoutes/RouteList";
-import mockRoutes from "../mock_data/MockJourneys";
 import './Explore.css'
+import JourneyService from "../services/JourneyService";
+import IRouteCard from "../components/JourneyRoutes/IRouteCard";
 
 type Direction = google.maps.DirectionsResult;
 
@@ -32,6 +33,8 @@ export default function Explore() {
 
 	const [startDate, setStartDate] = useState<Dayjs | null>(null);
 	const [endDate, setEndDate] = useState<Dayjs | null>(null);
+
+	const [routes, setRoutes] = useState<IRouteCard[]>([]);
 
 	async function initializeOrigin(cityCountryPair: ICityCountryPair|null) {
 		setOrigin(cityCountryPair);
@@ -82,6 +85,7 @@ export default function Explore() {
 		}
 	}, [originCoords, destinationCoords, getDirections])
 
+	// Getting the EU countries and cities
     useEffect(() => {
         async function fetchEUCountries() {
             const lookUpService = new LookupService();
@@ -91,6 +95,25 @@ export default function Explore() {
 
         fetchEUCountries();
     }, [])
+
+	useEffect(() => {
+		async function fetchAllRoutes() {
+			const journeyService = new JourneyService();
+			const data = await journeyService.getRoutesForJourney(
+				origin as ICityCountryPair, 
+				destination as ICityCountryPair,
+				startDate as Dayjs,
+				endDate as Dayjs,
+			);
+
+			setRoutes(data);
+		}
+
+		if (origin != null && destination != null && startDate != null && endDate != null) {
+			fetchAllRoutes();
+		}
+
+	}, [origin, destination, startDate, endDate])
 
     return (
 		<div className="vertical-flex-container">
@@ -162,7 +185,7 @@ export default function Explore() {
 					</>
 				</Map>
 				<Divider orientation="vertical" variant="middle" flexItem />
-				<RouteList routeInfo={mockRoutes}/>
+				<RouteList routeInfo={routes as IRouteCard[]}/>
 			</div>
 		</div>
 	);
