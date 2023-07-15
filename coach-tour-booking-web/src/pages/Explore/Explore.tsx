@@ -15,7 +15,8 @@ import RouteList from "../../components/JourneyRoutes/RouteList";
 import JourneyService from "../../services/JourneyService";
 import IRouteCard from "../../components/JourneyRoutes/IRouteCard";
 import './Explore.css'
-import { useAppSelector } from "../../store/Hooks";
+import { useAppDispatch, useAppSelector } from "../../store/Hooks";
+import { setDestination, setDestinationCoords, setDirections, setEndDate, setOrigin, setOriginCoords, setStartDate } from "../../store/slices/ExploreSlice";
 
 export type Direction = google.maps.DirectionsResult;
 export type Waypoint = google.maps.DirectionsWaypoint;
@@ -23,25 +24,16 @@ export type Waypoint = google.maps.DirectionsWaypoint;
 export default function Explore() {
 
 	const mapRef = useRef<MapType>();
-
-	const currentWayPoints = useAppSelector(state => state.explorePage.selectedWayPoints);
-
-    const [origin, setOrigin] = useState<ICityCountryPair | null>(null);
-	const [originCoords, setOriginCoords] = useState<LatLng | null>();
-	
-    const [destination, setDestination] = useState<ICityCountryPair | null>(null);
-	const [destinationCoords, setDestinationCoords] = useState<LatLng | null>();
-
-	const [directions, setDirections] = useState<Direction | null>();
-	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
-
-	const [startDate, setStartDate] = useState<Dayjs | null>(null);
-	const [endDate, setEndDate] = useState<Dayjs | null>(null);
+	const dispatch = useAppDispatch();
 
 	const [routes, setRoutes] = useState<IRouteCard[]>([]);
+	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
+	
+	const currentWayPoints = useAppSelector(state => state.explorePage.selectedWayPoints);
+	const { origin, originCoords, destination, destinationCoords, directions, startDate, endDate } = useAppSelector(state => state.explorePage)
 
-	async function initializeOrigin(cityCountryPair: ICityCountryPair|null) {
-		setOrigin(cityCountryPair);
+	async function initializeOrigin(cityCountryPair: ICityCountryPair) {
+		dispatch(setOrigin(cityCountryPair));
 
 		if (cityCountryPair != null) {
 			const geoCode = await getGeocode({
@@ -49,13 +41,13 @@ export default function Explore() {
 			});
 
 			const oLatLng = await getLatLng(geoCode[0]);
-			setOriginCoords(oLatLng);
+			dispatch(setOriginCoords(oLatLng));
 			mapRef.current?.panTo(oLatLng);
-		} else setOriginCoords(null);
+		} else dispatch(setOriginCoords(null));
 	}
 
-	async function initializeDestination(cityCountryPair: ICityCountryPair|null) {
-		setDestination(cityCountryPair);
+	async function initializeDestination(cityCountryPair: ICityCountryPair) {
+		dispatch(setDestination(cityCountryPair))
 
 		if (cityCountryPair != null) {
 			const geoCode = await getGeocode({
@@ -63,9 +55,9 @@ export default function Explore() {
 			});
 
 			const dLatLng = await getLatLng(geoCode[0]);
-			setDestinationCoords(dLatLng);
+			dispatch(setDestinationCoords(dLatLng));
 			mapRef.current?.panTo(dLatLng);
-		} else setDestinationCoords(null);
+		} else dispatch(setDestinationCoords(null));
 	}
 
 	const getDirections = useCallback(async () => {
@@ -76,14 +68,14 @@ export default function Explore() {
 				origin: originCoords as LatLng,
 				destination: destinationCoords as LatLng,
 				travelMode: google.maps.TravelMode.DRIVING,
-				waypoints: currentWayPoints,
-				optimizeWaypoints: true
+				waypoints: currentWayPoints
 			}, (result, status) => {
 				if (status === google.maps.DirectionsStatus.OK) {
-					setDirections(result);
+					dispatch(setDirections(result));
 				}
 			}
 		)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [originCoords, destinationCoords, currentWayPoints])
 
 	useEffect(() => {
@@ -130,13 +122,14 @@ export default function Explore() {
 			<Typography variant="body2">{pageTexts.explore.subTitle}</Typography>
 			<div className="explore-toolbar">
 				<Autocomplete
+					value={origin}
 					id="grouped-demo"
 					options={euCountries.filter((c) => c !== destination)}
 					groupBy={(c) => c.country}
 					getOptionLabel={(c) => c.city}
 					sx={{ width: 200 }}
 					size="small"
-					onChange={(event, value) => initializeOrigin(value)}
+					onChange={(event, value) => initializeOrigin(value as ICityCountryPair)}
 					renderInput={(params) => (
 						<TextField {...params} label="Origin" />
 					)}
@@ -145,19 +138,20 @@ export default function Explore() {
 					<ArrowForwardIcon/>
 				</div>
 				<Autocomplete
+					value={destination}
 					id="grouped-demo"
 					options={euCountries.filter((c) => c !== origin)}
 					groupBy={(c) => c.country}
 					getOptionLabel={(c) => c.city}
 					sx={{ width: 200 }}
 					size="small"
-					onChange={(event, value) => initializeDestination(value)}
+					onChange={(event, value) => initializeDestination(value as ICityCountryPair)}
 					renderInput={(params) => (
 						<TextField {...params} label="Destination" />
 					)}
 				/>
 				<Divider orientation="vertical" variant="middle" flexItem />
-				<DatePicker onChange={(d: Dayjs | null) => { setStartDate(d) }} maxDate={endDate?.add(-1, 'day')} disablePast={true} formatDensity="spacious" label="Starting from" slotProps={{
+				<DatePicker value={startDate} onChange={(d: Dayjs | null) => { dispatch(setStartDate(d)) }} maxDate={endDate?.add(-1, 'day')} disablePast={true} formatDensity="spacious" label="Starting from" slotProps={{
 					textField: {
 						sx: { width: '210px' },
 						size: 'small',
@@ -166,7 +160,7 @@ export default function Explore() {
 				<div className="ltr_arrow">
 					<ArrowForwardIcon/>
 				</div>
-				<DatePicker onChange={(d: Dayjs | null) => { setEndDate(d) }} minDate={startDate?.add(1, 'day')} disablePast={true} formatDensity="spacious" label="Until" slotProps={{
+				<DatePicker value={endDate} onChange={(d: Dayjs | null) => { dispatch(setEndDate(d)) }} minDate={startDate?.add(1, 'day')} disablePast={true} formatDensity="spacious" label="Until" slotProps={{
 					textField: {
 						sx: { width: '210px' },
 						size: 'small',
