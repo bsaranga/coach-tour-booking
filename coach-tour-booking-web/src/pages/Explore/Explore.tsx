@@ -1,20 +1,20 @@
 import { Autocomplete, Button, Divider, TextField, Typography } from "@mui/material";
-import LookupService from "../services/LookupService";
+import LookupService from "../../services/LookupService";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { ICityCountryPair } from "../mock_data/SupportedEUCountries";
+import { ICityCountryPair } from "../../mock_data/SupportedEUCountries";
 import { LatLng, getGeocode, getLatLng } from "use-places-autocomplete";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Map from "../components/Map/Map";
-import { Map as MapType } from "../components/Map/Map";
+import Map from "../../components/Map/Map";
+import { Map as MapType } from "../../components/Map/Map";
 import { DirectionsRenderer, Marker } from "@react-google-maps/api";
-import { pageTexts } from "../app_data/AllText";
+import { pageTexts } from "../../app_data/AllText";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import SearchIcon from '@mui/icons-material/Search';
-import RouteList from "../components/JourneyRoutes/RouteList";
+import RouteList from "../../components/JourneyRoutes/RouteList";
 import './Explore.css'
-import JourneyService from "../services/JourneyService";
-import IRouteCard from "../components/JourneyRoutes/IRouteCard";
+import JourneyService from "../../services/JourneyService";
+import IRouteCard from "../../components/JourneyRoutes/IRouteCard";
 
 type Direction = google.maps.DirectionsResult;
 
