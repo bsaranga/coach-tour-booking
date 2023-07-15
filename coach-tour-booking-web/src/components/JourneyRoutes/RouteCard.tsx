@@ -9,8 +9,8 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import IRouteCard from './IRouteCard';
 import { useAppDispatch, useAppSelector } from '../../store/Hooks';
 import { setSelectedRoute } from '../../store/slices/ExploreSlice';
-import { addToast } from '../../store/slices/ToastSlice';
 import { useId } from 'react';
+import showToast from '../../services/ToastService';
 
 export default function RouteCard(props: IRouteCard) {
 
@@ -22,12 +22,7 @@ export default function RouteCard(props: IRouteCard) {
 
     function handleSelection() {
         dispatch(setSelectedRoute(routeId));
-        dispatch(addToast({
-            toastId: `${id}`,
-            isOpen: true,
-            message: `${routeName} route selected`,
-            type: "success",
-        }))
+        showToast(id, `${routeName} route selected`, 'success', dispatch);
     }
 
     return (
@@ -55,7 +50,7 @@ export default function RouteCard(props: IRouteCard) {
                 </Box>
             </CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                <Button sx={{ textTransform: "none" }} onClick={handleSelection} >Select</Button>
+                <Button sx={{ textTransform: "none" }} onClick={handleSelection} disabled={selectedRouteId === routeId} >Select</Button>
                 <Button sx={{ textTransform: "none" }}>Book Now</Button>
             </Box>
         </Box>
