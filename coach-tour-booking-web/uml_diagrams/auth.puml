@@ -1,0 +1,59 @@
+@startuml
+actor User
+participant SPA as "Single Page Application" #add8e6
+participant AuthMiddleware as "Authentication Middleware" #98fb98
+participant AuthAPI as "Authentication API Controller" #add8e6
+participant SignInManager #98fb98
+participant UserManager #98fb98
+participant DB as "User Store (DB)" #f4a460
+participant TokenService as "Token Generation Service" #98fb98
+participant "Claims Principal" as ClaimsPrincipal #add8e6
+participant AuthzMiddleware as "Authorization Middleware" #98fb98
+participant API as "Sample API Controller" #add8e6
+
+User -> SPA : Request Login
+activate SPA
+SPA -> AuthAPI : Login Request with credentials
+activate AuthAPI
+AuthAPI -> SignInManager : Verify Credentials
+activate SignInManager
+SignInManager -> DB : Check User Credentials
+Activate DB
+DB --> SignInManager : Return Credentials Match or not
+Deactivate DB
+SignInManager --> AuthAPI : Result
+deactivate SignInManager
+alt Authentication Successful
+    AuthAPI -> UserManager : Get User Claims
+    activate UserManager
+    UserManager -> DB : Retrieve User Claims
+    Activate DB
+    DB --> UserManager : Return User Claims
+    Deactivate DB
+    UserManager --> AuthAPI : User Claims
+    deactivate UserManager
+    AuthAPI -> TokenService : Generate JWT token
+    activate TokenService
+    TokenService --> AuthAPI : JWT token
+    deactivate TokenService
+    AuthAPI --> SPA : JWT token & Response Cookie
+    deactivate AuthAPI
+    SPA -> AuthMiddleware : Request with JWT token in Authorization header
+    activate AuthMiddleware
+    AuthMiddleware -> ClaimsPrincipal : Validate JWT & Construct Claims Principal
+    activate ClaimsPrincipal
+    ClaimsPrincipal --> AuthMiddleware : ClaimsPrincipal
+    AuthMiddleware -> AuthzMiddleware : Allow/Deny based on Claims Principle
+    activate AuthzMiddleware
+    AuthzMiddleware -> API : Forward to Controller if Authorized
+    activate API
+    API --> SPA : Response
+else Authentication Unsuccessful
+    AuthAPI --> SPA : Authentication failed message
+    deactivate AuthAPI
+end
+deactivate API
+deactivate AuthzMiddleware
+deactivate AuthMiddleware
+deactivate SPA
+@enduml

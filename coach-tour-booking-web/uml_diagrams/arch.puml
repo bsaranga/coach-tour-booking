@@ -3,6 +3,12 @@ package "User Interface Layer (SPA)" #LightGreen {
   [Single Page Application] as SPA
 }
 
+package "Google Maps Service" #LavenderBlush {
+    [Map]
+    [Directions]
+    [Geocoding]
+}
+
 package "API Layer" #LightSkyBlue {
   [Identity API Controller] as IdentityAPI
   [Authentication Middleware] as AuthMiddleware
@@ -20,8 +26,11 @@ database "Database Server" #LightPink {
     [Bookings Database] as DB
 }
 
-SPA --> AuthMiddleware
-AuthMiddleware --> AuthorizationAPI : Validate Claims
+SPA -> Map
+SPA -> Directions
+SPA --> Geocoding
+SPA -> AuthMiddleware
+AuthMiddleware -> AuthorizationAPI : Validate Claims
 AuthorizationAPI --> IdentityAPI
 AuthorizationAPI --> RouteAPI
 AuthorizationAPI --> BookingAPI
@@ -29,6 +38,6 @@ IdentityAPI -> "ORM"
 RouteAPI -> "ORM"
 BookingAPI --> "ORM"
 IdentityAPI -> EmailService
-ORM -> "DB" : Transform and Execute SQL
+ORM --> "DB" : Transform and Execute SQL
 
 @enduml

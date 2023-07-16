@@ -1,0 +1,76 @@
+@startuml
+actor Customer
+
+box "User Interface Layer (SPA)" #LightGreen
+participant SPA as "Single Page Application"
+participant Val as "Form Validator Service"
+end box
+
+box "API Layer" #LightSkyBlue
+participant RouteAPI as "Route API Controller"
+participant BookingAPI as "Booking API Controller"
+end box
+
+box "Data Access Layer" #LightYellow
+participant ORM as "Object-Relational Mapper (ORM)"
+end box
+
+box "Data Layer" #LightPink
+participant DB as "Database"
+end box
+
+Customer -> SPA : Navigate to Bookings page
+activate SPA
+SPA -> RouteAPI : Fetch available dates/times for journey
+activate RouteAPI
+RouteAPI -> ORM : Retrieve available dates/times
+activate ORM
+ORM -> DB : Transform and Execute SQL
+activate DB
+DB --> ORM : Return Result
+deactivate DB
+ORM --> RouteAPI : Return Result
+deactivate ORM
+RouteAPI --> SPA : Return available dates/times
+deactivate RouteAPI
+
+Customer -> SPA : Select a date/time
+activate SPA
+SPA -> BookingAPI : Fetch available seats & prices
+activate BookingAPI
+BookingAPI -> ORM : Retrieve seat availability & prices
+activate ORM
+ORM -> DB : Transform and Execute SQL
+activate DB
+DB --> ORM : Return Result
+deactivate DB
+ORM --> BookingAPI : Return Result
+deactivate ORM
+BookingAPI --> SPA : Return available seats & prices
+deactivate BookingAPI
+
+Customer -> SPA : Specify seats & luggage
+activate SPA
+SPA -> Val : Validate booking details
+activate Val
+Val --> SPA : Return Validation Result
+deactivate Val
+
+alt Validation Successful
+    SPA -> BookingAPI : Save booking
+    activate BookingAPI
+    BookingAPI -> ORM : Save booking details
+    activate ORM
+    ORM -> DB : Transform and Execute SQL
+    activate DB
+    DB --> ORM : Return Result
+    deactivate DB
+    ORM --> BookingAPI : Return Result
+    deactivate ORM
+    BookingAPI --> SPA : Return success message
+    deactivate BookingAPI
+else Validation Unsuccessful
+    SPA -> Customer : Show error message
+end
+deactivate SPA
+@enduml
