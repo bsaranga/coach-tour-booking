@@ -144,8 +144,8 @@ export default function Bookings() {
                                 <Button size="small" variant="contained" sx={{ textTransform: 'none' }}>Add Additional Luggage</Button>
                             </Box>
                             <Divider orientation="horizontal" sx={{
-                                marginTop: "1rem",
-                                marginBottom: "1rem",
+                                marginTop: "0.5rem",
+                                marginBottom: "0.5rem",
                             }} />
                             <Box display='flex' justifyContent='space-between'>
                                 <Box display='flex' flexDirection='column'>

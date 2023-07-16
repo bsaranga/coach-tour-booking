@@ -53,7 +53,7 @@ export default function RouteCard(props: IRouteCard) {
             </CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
                 <Button sx={{ textTransform: "none" }} onClick={handleSelection} disabled={selectedRouteId === routeId} >Select</Button>
-                <Button sx={{ textTransform: "none" }}>Book Now</Button>
+                <Button sx={{ textTransform: "none" }} disabled={selectedRouteId !== routeId} >Book Now</Button>
             </Box>
         </Box>
         <CardMedia
