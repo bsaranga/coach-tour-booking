@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Divider, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Divider, TextField, Typography } from "@mui/material";
 import { pageTexts } from "../app_data/AllText";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../store/Hooks";
@@ -12,6 +12,7 @@ import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineE
 import EuroIcon from '@mui/icons-material/Euro';
 import { ICoachType } from "../mock_data/CoachTypes";
 import { DatePicker } from "@mui/x-date-pickers";
+import LuggageIcon from '@mui/icons-material/Luggage';
 
 export default function Bookings() {
 
@@ -45,7 +46,6 @@ export default function Bookings() {
     return (
         <div className="vertical-flex-container">
             <Typography variant="h5">{pageTexts.bookings.title}</Typography>
-			{ selectedRoute != null && <Typography variant="body2">{pageTexts.bookings.subTitle}</Typography>}
             { selectedRoute == null ?
                 <Box display='flex' justifyContent='center' flexGrow={1} alignItems='center'>
                     <Typography variant="subtitle1">Select a route from 'Explore' page</Typography>
@@ -134,17 +134,35 @@ export default function Bookings() {
                                     }
                                 }} />
                             </Box>
-                            <Box display='flex' alignItems='center' gap={0.45}>
-                                <EuroIcon fontSize="large" htmlColor="#6b6b6b" />
-                                <Typography variant="h4">
-                                    625
-                                </Typography>
+                            <Box display='flex' alignItems='center' justifyContent='space-between' gap={0.45}>
+                                <Box display='flex' gap={0.5} alignItems='center'>
+                                    <LuggageIcon fontSize="small" htmlColor="#6b6b6b"/>
+                                    <Typography variant="caption" color="text.secondary">
+                                        Standard Luggage (5kg)
+                                    </Typography>
+                                </Box>
+                                <Button size="small" variant="contained" sx={{ textTransform: 'none' }}>Add Additional Luggage</Button>
                             </Box>
+                            <Divider orientation="horizontal" sx={{
+                                marginTop: "1rem",
+                                marginBottom: "1rem",
+                            }} />
+                            <Box display='flex' justifyContent='space-between'>
+                                <Box display='flex' flexDirection='column'>
+                                    <Typography variant="caption" color="text.secondary">2 Adult Seats</Typography>
+                                    <Typography variant="caption" color="text.secondary">1 Child Seat</Typography>
+                                    <Typography variant="caption" color="text.secondary">Standard Luggage (5kg)</Typography>
+                                </Box>
+                                <Box display='flex'>
+                                    <EuroIcon fontSize="large" htmlColor="#6b6b6b" />
+                                    <Typography variant="h4">
+                                        625
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Button variant="contained" size="small" sx={{ textTransform: 'none' }}>Book Now</Button> 
                         </Box>
                     </CardContent>
-                    <CardActions>
-                        <Button size="small">Book</Button>
-                    </CardActions>
                 </Card>
                 </Box>
             } 
