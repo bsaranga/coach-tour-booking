@@ -9,7 +9,12 @@ const store = configureStore({
 		explorePage,
 		toastSlice
 	},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(listener.middleware)
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+		serializableCheck: {
+			ignoredActions: ['explore-page-slice/setStartDate', 'explore-page-slice/setEndDate'],
+			ignoredPaths: ['explorePage.startDate', 'explorePage.endDate'],
+		}
+	}).prepend(listener.middleware)
 });
 
 export const dispatcher = store.dispatch;

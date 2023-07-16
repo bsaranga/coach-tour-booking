@@ -3,10 +3,11 @@ import IExplore from "../../interfaces/AppState/IExploreState";
 import { Direction, Waypoint } from "../../pages/Explore/Explore";
 import { ICityCountryPair } from "../../mock_data/SupportedEUCountries";
 import { LatLng } from "use-places-autocomplete";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 const initialState: IExplore = {
-	
+	startDate: dayjs(),
+    endDate: dayjs().endOf('month'),
 };
 
 export const explorePageSlice = createSlice({

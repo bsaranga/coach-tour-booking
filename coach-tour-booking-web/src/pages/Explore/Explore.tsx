@@ -10,7 +10,6 @@ import { DirectionsRenderer, Marker } from "@react-google-maps/api";
 import { pageTexts } from "../../app_data/AllText";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
-import SearchIcon from '@mui/icons-material/Search';
 import RouteList from "../../components/JourneyRoutes/RouteList";
 import JourneyService from "../../services/JourneyService";
 import IRouteCard from "../../components/JourneyRoutes/IRouteCard";
@@ -167,7 +166,6 @@ export default function Explore() {
 					}
 				}} />
 				<Divider orientation="vertical" variant="middle" flexItem />
-				<Button variant="outlined" endIcon={<SearchIcon/>} size="medium">Search</Button>
 			</div>
 			<div className="horizontal-flex-container">
 				<Map ref={mapRef as RefObject<MapType>}>

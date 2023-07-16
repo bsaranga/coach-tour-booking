@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import {
 	Box,
 	List,
@@ -9,7 +9,7 @@ import {
 	Tabs,
 } from "@mui/material";
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { INavigationProps } from "../../interfaces/Common/INavigationProps";
 import Routes from "../../configuration/Routes";
 
@@ -22,6 +22,19 @@ type IResponsiveVariant = {
 export default function Navigation(props: INavigationProps) {
 	const { viewState } = props;
 	const [tabValue, setTabValue] = useState(0);
+	const [currentLocation, setCurrentLocation] = useState<string>();
+
+	const location = useLocation();
+
+	useEffect(() => {
+		setCurrentLocation(location.pathname);
+		Routes.forEach(r => {
+			const key = r.key;
+			if (`/${r.attr.pathName}` === location.pathname) {
+				setTabValue(key as number);
+			}
+		})
+	}, [location])
 
 	function handleChange(event: SyntheticEvent | null, tabVal: number) {
 		setTabValue(tabVal);
@@ -53,7 +66,7 @@ export default function Navigation(props: INavigationProps) {
 							<ListItemButton
 								key={page.key} 
 								onClick={() => handleChange(null, page.key as number)} 
-								selected={tabValue === page.key}
+								selected={currentLocation === `/${page.attr.pathName}`}
 								{...{component: RouterLink, to: page.attr.pathName}}
 								>
 									<Box sx={{

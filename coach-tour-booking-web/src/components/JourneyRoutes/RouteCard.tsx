@@ -12,6 +12,7 @@ import { setSelectedRoute, setSelectedWayPoints } from '../../store/slices/Explo
 import { useId } from 'react';
 import showToast from '../../services/ToastService';
 import { Waypoint } from '../../pages/Explore/Explore';
+import { Link as RouterLink } from "react-router-dom";
 
 export default function RouteCard(props: IRouteCard) {
 
@@ -53,7 +54,7 @@ export default function RouteCard(props: IRouteCard) {
             </CardContent>
             <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
                 <Button sx={{ textTransform: "none" }} onClick={handleSelection} disabled={selectedRouteId === routeId} >Select</Button>
-                <Button sx={{ textTransform: "none" }} disabled={selectedRouteId !== routeId} >Book Now</Button>
+                <Button sx={{ textTransform: "none" }} disabled={selectedRouteId !== routeId} {...{component: RouterLink, to: '/bookings'}} >Book Now</Button>
             </Box>
         </Box>
         <CardMedia
