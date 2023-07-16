@@ -11,7 +11,7 @@ import DirectionsBusFilledIcon from '@mui/icons-material/DirectionsBusFilled';
 import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineExtra';
 import EuroIcon from '@mui/icons-material/Euro';
 import { ICoachType } from "../mock_data/CoachTypes";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers";
 import LuggageIcon from '@mui/icons-material/Luggage';
 import { Dayjs } from "dayjs";
 
@@ -22,6 +22,7 @@ export default function Bookings() {
     const { selectedRoute, startDate, endDate } = useAppSelector(state => state.explorePage);
 
     const [journeyDate, setJourneyDate] = useState<Dayjs>();
+    const [dateTimeValidationErr, setDateTimeValidationErr] = useState<string>();
 
     useEffect(() => {
         async function getRouteInfoForJourney() {
@@ -117,21 +118,41 @@ export default function Bookings() {
                             marginBottom: "1rem",
                         }} />
                         <Box display='flex' flexDirection='column' gap={2}>
-                            <Box display='flex' gap={1}>
-                                <DatePicker disablePast={true} minDate={startDate} maxDate={endDate} onChange={(val) => { setJourneyDate(val as Dayjs) }} formatDensity="spacious" label="Select journey date" slotProps={{
-                                    textField: {
-                                        sx: { width: '210px' },
-                                        size: 'small',
+                            <Box display='flex' gap={1} justifyContent='center'>
+                                <DateTimePicker
+                                    ampm={false}
+                                    disablePast
+                                    minDate={startDate}
+                                    maxDate={endDate}
+                                    closeOnSelect={false}
+                                    skipDisabled={true}
+                                    shouldDisableTime={(v, tv) => {
+                                        const timeOnly = v?.toISOString().split('T')[1].split('.')[0].slice(0,5) as string;
+                                        return !(timeOnly === "08:00");
+                                    }}
+                                    label="Select journey date/time"
+                                    onChange={(val, context) => {
+                                        if (context.validationError) {
+                                            setDateTimeValidationErr('Invalid Date/Time');
+                                        } else setDateTimeValidationErr('');
+                                        setJourneyDate(val as Dayjs) 
+                                    }}
+                                    slotProps={{
+                                        textField: {
+                                            sx: { width: '230px' },
+                                            size: 'small',
+                                            helperText: dateTimeValidationErr,
+                                        },
+                                    }}
+                                />
+                                <TextField sx={{ width: '7.5rem'}} label='# of Adults' type="number" size="small" onKeyDown={(e) => {
+                                    if (e.key === "e" || e.key === "E" || e.key === "-" || e.key === "+") {
+                                        e.preventDefault();
                                     }
                                 }} />
-                                <TextField sx={{ width: '9rem'}} label='# of Adults' type="number" size="small" onKeyDown={(e) => {
+                                <TextField sx={{ width: '7.5rem'}} label='# of Children' type="number" size="small" onKeyDown={(e) => {
                                     if (e.key === "e" || e.key === "E" || e.key === "-" || e.key === "+") {
-                                    e.preventDefault()
-                                    }
-                                }} />
-                                <TextField sx={{ width: '9rem'}} label='# of Children' type="number" size="small" onKeyDown={(e) => {
-                                    if (e.key === "e" || e.key === "E" || e.key === "-" || e.key === "+") {
-                                    e.preventDefault()
+                                        e.preventDefault();
                                     }
                                 }} />
                             </Box>

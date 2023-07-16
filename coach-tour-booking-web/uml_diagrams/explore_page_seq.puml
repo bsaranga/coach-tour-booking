@@ -1,0 +1,64 @@
+@startuml
+
+actor Customer
+
+box "User Interface Layer (SPA)" #LightGreen
+participant SPA as "Single Page Application"
+participant Val as "Form Validator Service"
+end box
+
+box "API Layer" #LightSkyBlue
+participant RouteAPI as "Route API Controller"
+participant GoogleMapsAPI as "Google Maps Service"
+end box
+
+box "Data Access Layer" #LightYellow
+participant ORM as "Object-Relational Mapper (ORM)"
+end box
+
+box "Data Layer" #LightPink
+participant DB as "Database"
+end box
+
+Customer -> SPA : Navigate to Explore page
+activate SPA
+SPA -> RouteAPI : Fetch all European cities and countries
+activate RouteAPI
+RouteAPI -> ORM : Retrieve all cities and countries
+activate ORM
+ORM -> DB : Transform and Execute SQL
+activate DB
+DB --> ORM : Return Result
+deactivate DB
+ORM --> RouteAPI : Return Result
+deactivate ORM
+RouteAPI --> SPA : Return all cities and countries
+deactivate RouteAPI
+
+Customer -> SPA : Select origin, destination, date range
+activate SPA
+SPA -> Val : Validate Input
+activate Val
+Val --> SPA : Return Validation Result
+deactivate Val
+SPA -> RouteAPI : Fetch all available routes
+activate RouteAPI
+RouteAPI -> ORM : Retrieve all available routes
+activate ORM
+ORM -> DB : Transform and Execute SQL
+activate DB
+DB --> ORM : Return Result
+deactivate DB
+ORM --> RouteAPI : Return Result
+deactivate ORM
+RouteAPI --> SPA : Return all available routes
+deactivate RouteAPI
+
+Customer -> SPA : Select a Route
+activate SPA
+SPA -> GoogleMapsAPI : Fetch and render route directions
+activate GoogleMapsAPI
+GoogleMapsAPI --> SPA : Return route directions
+deactivate GoogleMapsAPI
+deactivate SPA
+@enduml

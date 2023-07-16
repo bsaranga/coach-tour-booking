@@ -1,0 +1,128 @@
+@startuml
+hide footbox
+
+actor Employee as "Europe Bus Employee"
+actor Customer
+
+box "User Interface Layer (SPA)" #LightGreen
+participant SPA as "Single Page Application"
+end box
+
+box "API Layer" #LightSkyBlue
+participant IdentityAPI as "Identity API Controller"
+participant AuthorizationAPI as "Authorization Middleware"
+participant RouteAPI as "Route API Controller"
+participant BookingAPI as "Booking API Controller"
+participant EmailService as "Email Service"
+end box
+
+box "Data Access Layer" #LightYellow
+participant ORM as "Object-Relational Mapper (ORM)"
+end box
+
+box "Data Layer" #LightPink
+participant DB as "Database"
+end box
+
+Customer -> SPA : Register Account
+activate SPA 
+SPA -> IdentityAPI: Register Account Request
+activate IdentityAPI 
+IdentityAPI -> ORM : New User Info 
+activate ORM 
+ORM -> DB : Transform and Execute SQL
+deactivate ORM 
+deactivate IdentityAPI 
+deactivate SPA
+
+Customer -> SPA : Email Verification
+activate SPA 
+SPA -> AuthorizationAPI : {JWT Claims, Verify Email}
+activate AuthorizationAPI
+AuthorizationAPI -> IdentityAPI : Verify Email
+activate IdentityAPI 
+IdentityAPI -> ORM : Email Verification
+activate ORM 
+ORM -> DB : Transform and Execute SQL
+DB --> ORM : Verification Result
+ORM --> IdentityAPI : Verification Result
+deactivate ORM 
+IdentityAPI -> EmailService : Send Confirmation Email
+activate EmailService
+EmailService --> Customer : Confirmation Email
+deactivate IdentityAPI
+deactivate EmailService
+deactivate AuthorizationAPI
+deactivate SPA
+
+Employee -> SPA : Manage Routes
+activate SPA 
+SPA -> AuthorizationAPI : {JWT Claims, Manage Routes Request}
+activate AuthorizationAPI
+AuthorizationAPI -> RouteAPI : Manage Routes Request
+activate RouteAPI 
+RouteAPI -> ORM : Update Route Info
+activate ORM 
+ORM -> DB : Transform and Execute SQL
+deactivate ORM 
+deactivate RouteAPI 
+deactivate AuthorizationAPI
+deactivate SPA 
+
+Employee -> SPA : View list of all Routes
+activate SPA 
+SPA -> AuthorizationAPI : {JWT Claims, Fetch All Routes Request}
+activate AuthorizationAPI
+AuthorizationAPI -> RouteAPI : Fetch All Routes Request
+activate RouteAPI 
+RouteAPI -> ORM : Retrieve All Routes
+activate ORM 
+ORM -> DB : Transform and Execute SQL
+deactivate ORM
+deactivate RouteAPI 
+deactivate AuthorizationAPI
+deactivate SPA
+
+Customer -> SPA : Login
+activate SPA 
+SPA -> IdentityAPI: Authenticate User
+activate IdentityAPI 
+IdentityAPI -> ORM : User Info Verification
+activate ORM 
+ORM -> DB : Transform and Execute SQL
+DB --> ORM : Verification Result
+ORM --> IdentityAPI : Verification Result
+deactivate ORM
+IdentityAPI --> SPA : Send JWT Token
+deactivate IdentityAPI
+SPA --> Customer : Store JWT as Cookies
+deactivate SPA
+
+Customer -> SPA : Search available Journeys
+activate SPA 
+SPA -> AuthorizationAPI : {JWT Claims, Search Journeys Request}
+activate AuthorizationAPI
+AuthorizationAPI -> RouteAPI : Search Journeys Request
+activate RouteAPI 
+RouteAPI -> ORM : Retrieve Journey Info
+activate ORM 
+ORM -> DB : Transform and Execute SQL
+deactivate ORM 
+deactivate RouteAPI 
+deactivate AuthorizationAPI
+deactivate SPA 
+
+Customer -> SPA : Book a Journey
+activate SPA 
+SPA -> AuthorizationAPI : {JWT Claims, Book Journey Request}
+activate AuthorizationAPI
+AuthorizationAPI -> BookingAPI : Book Journey Request
+activate BookingAPI 
+BookingAPI -> ORM : Validate and Save Booking Info
+activate ORM 
+ORM -> DB : Transform and Execute SQL
+deactivate ORM 
+deactivate BookingAPI 
+deactivate AuthorizationAPI
+deactivate SPA 
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+
+state "Navigation" as Root
+
+state "Explore Page" as Explore
+
+state "Notifications Center" as Notifications
+
+state "User Profile" as UserProfile
+
+state "Activities Page" as Activities 
+
+state "Bookings Page" as Bookings 
+
+state "Luggage Page" as Luggage
+
+state "Itenary Page" as Itenary
+
+state "Login Page" as Login
+
+state "Logout" as Logout
+
+state "Past Bookings" as ViewBooked 
+
+[*] --> Login : "Login"
+Login --> Root
+Login --> Explore : "Default Page"
+Root --> Explore
+Root --> Activities : "View Activities"
+Root --> Bookings : "Book Journey"
+Root --> Notifications : "Check Notifications"
+Root --> UserProfile : "User Profile"
+Bookings --> Luggage : "View/Add Luggage"
+Bookings --> Itenary : "View Itenary"
+Bookings --> ViewBooked : "View Past Bookings"
+Luggage --> Itenary : "Continue to Itenary"
+Itenary --> [*] : "Finish Booking"
+UserProfile --> Logout : "Logout"
+Logout --> [*] : "Exit Site"
+@enduml

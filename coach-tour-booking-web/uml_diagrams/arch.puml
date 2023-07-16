@@ -1,0 +1,34 @@
+@startuml
+package "User Interface Layer (SPA)" #LightGreen {
+  [Single Page Application] as SPA
+}
+
+package "API Layer" #LightSkyBlue {
+  [Identity API Controller] as IdentityAPI
+  [Authentication Middleware] as AuthMiddleware
+  [Authorization Middleware] as AuthorizationAPI
+  [Route API Controller] as RouteAPI
+  [Booking API Controller] as BookingAPI
+  [Email Service] as EmailService
+}
+
+package "Data Access Layer (ORM)" #LightYellow {
+  [Object-Relational Mapper] as ORM
+}
+
+database "Database Server" #LightPink {
+    [Bookings Database] as DB
+}
+
+SPA --> AuthMiddleware
+AuthMiddleware --> AuthorizationAPI : Validate Claims
+AuthorizationAPI --> IdentityAPI
+AuthorizationAPI --> RouteAPI
+AuthorizationAPI --> BookingAPI
+IdentityAPI -> "ORM"
+RouteAPI -> "ORM"
+BookingAPI --> "ORM"
+IdentityAPI -> EmailService
+ORM -> "DB" : Transform and Execute SQL
+
+@enduml
