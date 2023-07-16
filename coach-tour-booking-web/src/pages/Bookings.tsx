@@ -13,12 +13,15 @@ import EuroIcon from '@mui/icons-material/Euro';
 import { ICoachType } from "../mock_data/CoachTypes";
 import { DatePicker } from "@mui/x-date-pickers";
 import LuggageIcon from '@mui/icons-material/Luggage';
+import { Dayjs } from "dayjs";
 
 export default function Bookings() {
 
     const [routeInfo, setRouteInfo] = useState<IRouteCard>();
     const [coachInfo, setCoachInfo] = useState<ICoachType>();
     const { selectedRoute, startDate, endDate } = useAppSelector(state => state.explorePage);
+
+    const [journeyDate, setJourneyDate] = useState<Dayjs>();
 
     useEffect(() => {
         async function getRouteInfoForJourney() {
@@ -40,8 +43,6 @@ export default function Bookings() {
         getRouteInfoForJourney();
         getCoachInfoForJourney();
     }, [selectedRoute])
-
-    console.log(selectedRoute);
     
     return (
         <div className="vertical-flex-container">
@@ -117,7 +118,7 @@ export default function Bookings() {
                         }} />
                         <Box display='flex' flexDirection='column' gap={2}>
                             <Box display='flex' gap={1}>
-                                <DatePicker disablePast={true} minDate={startDate} maxDate={endDate} formatDensity="spacious" label="Select journey date" slotProps={{
+                                <DatePicker disablePast={true} minDate={startDate} maxDate={endDate} onChange={(val) => { setJourneyDate(val as Dayjs) }} formatDensity="spacious" label="Select journey date" slotProps={{
                                     textField: {
                                         sx: { width: '210px' },
                                         size: 'small',

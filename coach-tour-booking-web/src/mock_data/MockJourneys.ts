@@ -11,7 +11,6 @@ const mockRouteInfo: IRouteCard[] = [
 		routeName: "Alpine Symphony Route",
 		distance: 765,
 		distanceUnit: "km",
-		journeyDate: "17/07/2023",
 		journeyImgUrl: img1,
 		travelTime: "3 hr 52 min",
 		waypoints: [
@@ -73,7 +72,6 @@ const mockRouteInfo: IRouteCard[] = [
 		routeName: "Imperial Heritage Trail",
 		distance: 765,
 		distanceUnit: "km",
-		journeyDate: "17/07/2023",
 		journeyImgUrl: img2,
 		travelTime: "3 hr 52 min",
 		waypoints: [
@@ -93,7 +91,6 @@ const mockRouteInfo: IRouteCard[] = [
 		routeName: "Baroque Bliss Expedition",
 		distance: 765,
 		distanceUnit: "km",
-		journeyDate: "17/07/2023",
 		journeyImgUrl: img3,
 		travelTime: "3 hr 52 min",
 		waypoints: [

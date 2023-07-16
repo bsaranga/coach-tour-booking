@@ -20,7 +20,7 @@ export default function RouteCard(props: IRouteCard) {
     const dispatch = useAppDispatch();
     const selectedRouteId = useAppSelector(state => state.explorePage.selectedRoute);
 
-    const { routeId, journeyDate, startCity, routeName, endCity, journeyImgUrl, distance, distanceUnit, travelTime, waypoints } = props;
+    const { routeId, startCity, routeName, endCity, journeyImgUrl, distance, distanceUnit, travelTime, waypoints } = props;
 
     function handleSelection() {
         dispatch(setSelectedRoute(routeId));
@@ -32,7 +32,6 @@ export default function RouteCard(props: IRouteCard) {
     <Card elevation={2} sx={{ display: 'flex', width: '24rem', justifyContent: 'space-between' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography variant='caption' color="text.secondary">{journeyDate}</Typography>
                 <Box display={'flex'} gap={0.5}>
                     <Typography component="div" variant="caption">{startCity}</Typography>
                     <div className="ltr_arrow">

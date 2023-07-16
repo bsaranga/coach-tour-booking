@@ -15,7 +15,7 @@ import JourneyService from "../../services/JourneyService";
 import IRouteCard from "../../components/JourneyRoutes/IRouteCard";
 import './Explore.css'
 import { useAppDispatch, useAppSelector } from "../../store/Hooks";
-import { setDestination, setDestinationCoords, setDirections, setEndDate, setOrigin, setOriginCoords, setStartDate } from "../../store/slices/ExploreSlice";
+import { setDestination, setDestinationCoords, setEndDate, setOrigin, setOriginCoords, setStartDate } from "../../store/slices/ExploreSlice";
 
 export type Direction = google.maps.DirectionsResult;
 export type Waypoint = google.maps.DirectionsWaypoint;
@@ -26,10 +26,11 @@ export default function Explore() {
 	const dispatch = useAppDispatch();
 
 	const [routes, setRoutes] = useState<IRouteCard[]>([]);
+	const [directions, setDirections] = useState<Direction>();
 	const [euCountries, setEuCountries] = useState<ICityCountryPair[]>([]);
 	
 	const currentWayPoints = useAppSelector(state => state.explorePage.selectedWayPoints);
-	const { origin, originCoords, destination, destinationCoords, directions, startDate, endDate } = useAppSelector(state => state.explorePage)
+	const { origin, originCoords, destination, destinationCoords, startDate, endDate } = useAppSelector(state => state.explorePage)
 
 	async function initializeOrigin(cityCountryPair: ICityCountryPair) {
 		dispatch(setOrigin(cityCountryPair));
@@ -70,7 +71,7 @@ export default function Explore() {
 				waypoints: currentWayPoints
 			}, (result, status) => {
 				if (status === google.maps.DirectionsStatus.OK) {
-					dispatch(setDirections(result));
+					setDirections(result as Direction);
 				}
 			}
 		)
