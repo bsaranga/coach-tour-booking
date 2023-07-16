@@ -39,12 +39,18 @@ export default function Bookings() {
         getRouteInfoForJourney();
         getCoachInfoForJourney();
     }, [selectedRoute])
+
+    console.log(selectedRoute);
     
     return (
         <div className="vertical-flex-container">
             <Typography variant="h5">{pageTexts.bookings.title}</Typography>
-			<Typography variant="body2">{pageTexts.bookings.subTitle}</Typography>
-            <Box display='flex' justifyContent='center' flexGrow={1}>
+			{ selectedRoute != null && <Typography variant="body2">{pageTexts.bookings.subTitle}</Typography>}
+            { selectedRoute == null ?
+                <Box display='flex' justifyContent='center' flexGrow={1} alignItems='center'>
+                    <Typography variant="subtitle1">Select a route from 'Explore' page</Typography>
+                </Box> :
+                <Box display='flex' justifyContent='center' flexGrow={1}>
                 <Card sx={{ width: 540 }}>
                     <CardMedia
                         component="img"
@@ -140,7 +146,8 @@ export default function Bookings() {
                         <Button size="small">Book</Button>
                     </CardActions>
                 </Card>
-            </Box> 
+                </Box>
+            } 
         </div>
     )
 }
