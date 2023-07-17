@@ -122,9 +122,7 @@ namespace coach_booking_auth.Helpers
             List<IdentityRole> roles = new List<IdentityRole>
             {
                 new IdentityRole(Role.ADMIN.Name),
-                new IdentityRole(Role.OPERATIONAL_STAFF.Name),
-                new IdentityRole(Role.STATION_MANAGER.Name),
-                new IdentityRole(Role.CONSUMER.Name),
+                new IdentityRole(Role.CUSTOMER.Name),
             };
 
             foreach (var role in roles)
@@ -146,7 +144,7 @@ namespace coach_booking_auth.Helpers
                 logger.LogInformation("User doesn't exist, creating default user...");
 
                 var defaultAdminUser = new IdentityUser("admin");
-                await userManager.SetEmailAsync(defaultAdminUser, "admin@powerfuel.com");
+                await userManager.SetEmailAsync(defaultAdminUser, "admin@eurobus.com");
                 
                 var createdUser = await userManager.CreateAsync(defaultAdminUser, "admin");
                 

@@ -5,10 +5,8 @@ namespace coach_booking_auth.Models.Enumerations
     public class Role : Enumeration
     {
         public readonly static Role ADMIN = new Role(0, nameof(ADMIN));
-        public readonly static Role DISPATCH_STAFF = new Role(1, nameof(DISPATCH_STAFF));
-        public readonly static Role OPERATIONAL_STAFF = new Role(2, nameof(OPERATIONAL_STAFF));
-        public readonly static Role STATION_MANAGER = new Role(3, nameof(STATION_MANAGER));
-        public readonly static Role CONSUMER = new Role(4, nameof(CONSUMER));
+        public readonly static Role EMPLOYEE = new Role(1, nameof(EMPLOYEE));
+        public readonly static Role CUSTOMER = new Role(2, nameof(CUSTOMER));
 
         public Role(int Id, string Name) : base (Id, Name)
         {
