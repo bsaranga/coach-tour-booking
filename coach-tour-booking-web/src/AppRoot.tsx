@@ -3,17 +3,29 @@ import './App.css'
 import AppHeader from './components/AppHeader/AppHeader';
 import Navigation from './components/Navigation/Navigation';
 import IViewState from './interfaces/AppState/IViewState';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import "./pages/Pages.css"
 import { footerNotice } from './app_data/AllText';
 import ToastFactory from './components/Toast/ToastFactory';
+import AuthService from './services/AuthService';
 
 function App() {
   
+  const authService = new AuthService();
+
+  const navigate = useNavigate();
   const [viewState, setViewState] = useState<IViewState>({ screenSize: 'desktop'})
+  const [authenticationStatus, setAuthenticationStatus] = useState<boolean | null>(null);
 
   useEffect(() => {
+
+    authService.isAuthenticated().then(res => {
+      res.json().then(authStatus => {
+        setAuthenticationStatus(authStatus.authenticated);
+      })
+    })
+
     const mobileQuery = window.matchMedia('(max-width: 767px)');
     const tabletQuery = window.matchMedia('(min-width: 768px) and (max-width: 991px)');
     const desktopQuery = window.matchMedia('(min-width: 992px)');
@@ -33,7 +45,15 @@ function App() {
       desktopQuery.removeEventListener("change", handleDesktopChange);
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!authenticationStatus) {
+      navigate("login");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authenticationStatus])
 
   function handleMobileChange(event: MediaQueryListEvent) {
     const mql = event.currentTarget as MediaQueryList;

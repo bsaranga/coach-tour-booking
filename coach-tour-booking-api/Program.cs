@@ -92,7 +92,7 @@ namespace coach_tour_booking_api
 
                 app.UseCors(x =>
                 {
-                    x.WithOrigins("https://localhost:3000")
+                    x.WithOrigins("http://localhost:3000")
                      .AllowCredentials()
                      .AllowAnyMethod()
                      .AllowAnyHeader();
