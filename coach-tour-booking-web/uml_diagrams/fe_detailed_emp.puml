@@ -1,0 +1,29 @@
+@startuml
+
+state "Navigation" as Root
+
+state "User Profile" as UserProfile
+
+state "Manage Routes" as M_Routes
+
+state "Manage Bookings" as M_Bookings
+
+state "Reports" as M_Reports
+
+state "Login Page" as Login
+
+state "Logout" as Logout
+
+[*] --> Login : "Login"
+Login --> Root
+Login -> M_Routes : "Default Page"
+
+Root --> M_Routes
+Root --> M_Bookings : "View Activities"
+Root -> M_Reports : "View Reports"
+
+Root --> UserProfile : "User Profile"
+
+Root --> Logout : "Logout"
+Logout --> [*] : "Exit Site"
+@enduml

@@ -16,6 +16,11 @@ package "API Layer" #LightSkyBlue {
   [Route API Controller] as RouteAPI
   [Booking API Controller] as BookingAPI
   [Email Service] as EmailService
+  [Notification Service] as Notif
+}
+
+package "Web Sockets Server" #LightCoral {
+    [Notification Dispatch] as NotifDisp
 }
 
 package "Data Access Layer (ORM)" #LightYellow {
@@ -39,5 +44,7 @@ RouteAPI -> "ORM"
 BookingAPI --> "ORM"
 IdentityAPI -> EmailService
 ORM --> "DB" : Transform and Execute SQL
+Notif -> NotifDisp
+NotifDisp --> SPA
 
 @enduml
