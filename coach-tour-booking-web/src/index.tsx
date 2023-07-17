@@ -13,11 +13,12 @@ import { Provider } from 'react-redux';
 import Store from './store/Store';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import Login from './pages/Login';
 
 const router = createBrowserRouter([
   {
     path: "login",
-    element: <div>Login page</div>
+    element: <Login/>
   },
   {
     path: "/",

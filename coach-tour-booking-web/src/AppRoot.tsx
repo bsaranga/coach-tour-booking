@@ -19,9 +19,10 @@ function App() {
   const [authenticationStatus, setAuthenticationStatus] = useState<boolean | null>(null);
 
   useEffect(() => {
-
+    // lift the authentication status up to redux
     authService.isAuthenticated().then(res => {
       res.json().then(authStatus => {
+        console.log(authStatus)
         setAuthenticationStatus(authStatus.authenticated);
       })
     })
@@ -49,11 +50,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!authenticationStatus) {
+    console.log(authenticationStatus)
+    if (authenticationStatus != null && !authenticationStatus) {
       navigate("login");
+    } else if (authenticationStatus) {
+      navigate("explore");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticationStatus])
+  }, [authenticationStatus, navigate])
 
   function handleMobileChange(event: MediaQueryListEvent) {
     const mql = event.currentTarget as MediaQueryList;

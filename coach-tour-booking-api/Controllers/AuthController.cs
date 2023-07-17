@@ -194,7 +194,7 @@ namespace coach_tour_booking_api.Controllers
         [Authorize]
         public IActionResult Logout()
         {
-            Response.Cookies.Delete("X-Access-Token");
+            Response.Cookies.Delete("X-Access-Token", new CookieOptions { HttpOnly = true, Secure = true, Domain = "localhost", SameSite = SameSiteMode.None });
             return Ok();
         }
     }

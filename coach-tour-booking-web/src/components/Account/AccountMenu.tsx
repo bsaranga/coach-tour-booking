@@ -9,8 +9,14 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useState, MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../../services/AuthService';
 
 export default function AccountMenu() {
+
+  const navigate = useNavigate();
+  const authService = new AuthService(); 
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -18,6 +24,11 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    authService.logout().then(res => {
+      if (res.ok) {
+        navigate("/");
+      }
+    });
   };
   return (
     <>
@@ -39,8 +50,6 @@ export default function AccountMenu() {
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
-        onClose={handleClose}
-        onClick={handleClose}
         slotProps={
           {
             paper: {
@@ -74,11 +83,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem>
           <Avatar /> My account
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
