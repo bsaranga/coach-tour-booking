@@ -172,10 +172,22 @@ namespace coach_tour_booking_api.Controllers
         }
 
         [HttpGet("status")]
-        [Authorize]
         public IActionResult IsAuthenticated()
         {
-            return Ok(true);
+            var user = Request.HttpContext.User;
+            if (user.Claims.Any() && user.Identity?.Name != null)
+            {
+                return Ok(new
+                {
+                    Authenticated = true
+                });
+            } else
+            {
+                return Ok(new
+                {
+                    Authenticated = false
+                });
+            }
         }
 
         [HttpGet("logout")]
