@@ -53,11 +53,11 @@ namespace coach_booking_auth.Helpers
             var urlEncodedToken = HttpUtility.UrlEncode(emailToken);
 
             var baseUrl = configuration["Host:BaseUrl"];
-            var callbackUrl = $"{baseUrl}/auth/verifyEmail?userId={userId}&emailToken={urlEncodedToken}";
+            var callbackUrl = $"{baseUrl}/api/auth/verifyEmail?userId={userId}&emailToken={urlEncodedToken}";
             var emailBody = emailTemplate.Replace("{{verificationUrl}}", callbackUrl);
             var mailMessage = new MailMessage(configuration["EmailSettings:Email"], $"{identityUser.Email}")
             {
-                Subject = "Verify Your PowerFuel Account",
+                Subject = "Verify Your Europe Bus Account",
                 Priority = MailPriority.High,
                 Body = emailBody,
                 IsBodyHtml = true,
