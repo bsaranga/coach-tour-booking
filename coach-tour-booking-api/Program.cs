@@ -1,6 +1,8 @@
 using coach_booking_auth;
 using coach_booking_auth.Configuration;
 using coach_booking_auth.Helpers;
+using coach_tour_booking_data_access.Models;
+using coach_tour_booking_domain.Services;
 using coach_tour_booking_domain.Services.Implementations;
 using coach_tour_booking_domain.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +32,11 @@ namespace coach_tour_booking_api
 
             });
 
+            builder.Services.AddDbContext<EuroBusContext>(options =>
+            {
+                options.UseSqlServer(coreDbConnectionString);
+            });
+
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
@@ -48,6 +55,7 @@ namespace coach_tour_booking_api
             builder.Services.AddJwtAuthentication(builder.Configuration);
 
             // Authentication Services
+            builder.Services.AddScoped<CustomerService>();
             builder.Services.AddScoped<IAuthHelper, DefaultAuthHelper>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<ITemplateFetcher, TemplateFetcher>();
