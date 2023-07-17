@@ -1,0 +1,69 @@
+@startuml
+
+class BookingInfoDTO {
+    + userId: int
+    + routeId: int
+    + journeyDate: DateTime
+    + journeyTime: TimeOnly
+    + numberOfAdultSeats: int
+    + numberOfChildSeats: int
+    + luggageOptions: int[]
+    + activityIds: int[]
+}
+
+class BookingModel {
+    + bookingId: string
+    + userId: int
+    + routeId: int
+    + journeyDate: DateTime
+    + journeyTime: TimeOnly
+    + numberOfAdultSeats: int
+    + numberOfChildSeats: int
+    + luggageOptions: int[]
+    + activityIds: int[]
+}
+
+class BookingDbModel {
+    + bookingId: int
+    + fkUserId: int
+    + fkRouteId: int
+    + journeyDate: DateTime
+    + journeyTime: TimeOnly
+    + numberOfAdultSeats: int
+    + numberOfChildSeats: int
+    + luggageOptions: string
+    + activityIds: string
+}
+
+interface IMapper {
+    + Map<BookingModel>(source : BookingInfoDTO) : BookingModel
+    + Map<BookingDbModel>(source : BookingModel) : BookingDbModel
+}
+
+class IRepository {
+    + SaveBooking(model : BookingDbModel) : void
+}
+
+class Service {
+    -repository : IRepository
+    -mapper : IMapper
+    + constructor(repository : IRepository, mapper : IMapper)
+    + SaveBooking(request : BookingInfoDTO) : void
+}
+
+class APIController {
+    -service : Service
+    -mapper : IMapper
+    + constructor(service : Service, mapper : IMapper)
+    + SaveBooking(request : BookingInfoDTO) : void
+}
+
+APIController - BookingInfoDTO
+APIController --> Service : Uses
+APIController --> IMapper : Uses
+Service --> IRepository : Uses
+Service --> IMapper : Uses
+IMapper --> BookingModel : Uses
+IMapper --> BookingDbModel : Uses
+
+@enduml

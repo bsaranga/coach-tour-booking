@@ -1,0 +1,38 @@
+@startuml
+
+class UserInfoDTO {
+    + FirstName: string
+    + LastName: string
+    + Surname: string
+    + Gender: enum
+    + DateOfBirth: DateTime
+    + Address: string
+    + Country: string
+    + Phone: string
+}
+
+class ApplicationUser {
+    inherits IdentityUser
+}
+
+class UserManager {
+    -userManager : UserManager<ApplicationUser>
+    +CreateAsync(user : ApplicationUser, password : string) : Task
+}
+
+class RegisterController {
+    -userManager : UserManager<ApplicationUser>
+    +constructor(userManager : UserManager<ApplicationUser>)
+    +RegisterAsync(input : UserInfoDTO) : Task
+}
+
+class Startup {
+    +SetupIdentityServices(services : IServiceCollection) : void
+}
+
+RegisterController --> UserManager : Uses
+UserManager --> ApplicationUser : Uses
+RegisterController --> UserInfoDTO: Uses
+RegisterController --> Startup: Uses 
+
+@enduml

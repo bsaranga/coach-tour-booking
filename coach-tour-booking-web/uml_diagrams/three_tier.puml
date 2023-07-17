@@ -1,0 +1,32 @@
+@startuml
+
+package "Presentation Layer" {
+    [API Controllers]
+    [SPA]
+}
+
+package "Business Logic Layer" {
+    [Services]
+    [Domain Models]
+    [DTOs]
+    [Domain to Database Mappers]
+}
+
+package "Data Access Layer" {
+    [Database Objects]
+    [Repositories]
+    [Query Objects]
+}
+
+[SPA] ..> [API Controllers] : reference
+[API Controllers] ..> [Services] : reference
+
+[Services] ..> [Domain Models] : reference
+[Services] ..> [DTOs] : reference
+[Services] ..> [Domain to Database Mappers] : reference
+
+[Database Objects] .u.> [Domain to Database Mappers] : reference
+[Repositories] .u.> [Domain to Database Mappers] : reference
+[Query Objects] .u.> [Domain to Database Mappers] : reference
+
+@enduml
