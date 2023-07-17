@@ -1,0 +1,41 @@
+@startuml
+
+class CityCountryPair {
+    + City: string
+    + Country: string
+}
+
+interface IRouteQuery {
+    + getAllRoutes(startDate : DateTime, endDate : DateTime, origin : CityCountryPair, destination : CityCountryPair) : Route[]
+}
+
+interface IQueryProvider {
+    -routeQuery : IRouteQuery
+    + constructor(routeQuery : IRouteQuery)
+    + getRoutesQuery() : IRouteQuery
+}
+
+class RouteAPIController {
+    -queryProvider : IQueryProvider
+    + constructor(queryProvider : IQueryProvider)
+    + fetchAllRoutes(startDate : DateTime, endDate : DateTime, origin : CityCountryPair, destination : CityCountryPair) : Route[]
+}
+
+class RoutesDbContext {
+    +Routes: DbSet<Route>
+}
+
+class RouteQueryImpl {
+    -dbContext : RoutesDbContext
+    +constructor(dbContext : RoutesDbContext)
+    +getAllRoutes(startDate : DateTime, endDate : DateTime, origin : CityCountryPair, destination : CityCountryPair) : Route[]
+}
+
+IQueryProvider ..> RouteQueryImpl : Provides
+RouteQueryImpl ..> RoutesDbContext : Uses
+RouteQueryImpl ..|> IRouteQuery : Implements
+RouteAPIController --> IQueryProvider : Uses
+IQueryProvider -> IRouteQuery : Uses
+IRouteQuery --> CityCountryPair : Uses
+
+@enduml

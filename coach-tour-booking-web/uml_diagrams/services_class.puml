@@ -51,16 +51,16 @@ class Service {
     + SaveBooking(request : BookingInfoDTO) : void
 }
 
-class APIController {
+class BookingAPIController {
     -service : Service
     -mapper : IMapper
     + constructor(service : Service, mapper : IMapper)
     + SaveBooking(request : BookingInfoDTO) : void
 }
 
-APIController - BookingInfoDTO
-APIController --> Service : Uses
-APIController --> IMapper : Uses
+BookingAPIController - BookingInfoDTO
+BookingAPIController --> Service : Uses
+BookingAPIController --> IMapper : Uses
 Service --> IRepository : Uses
 Service --> IMapper : Uses
 IMapper --> BookingModel : Uses

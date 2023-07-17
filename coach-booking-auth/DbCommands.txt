@@ -1,0 +1,7 @@
+﻿Please replace placeholders denoted be <PLACEHOLDER>
+
+1. To Add New Migration
+dotnet ef migrations add <MIGRATION NAME HERE> -s ..\powerfuel-api\powerfuel-api.csproj -c AuthContext
+
+2. To Update Database
+dotnet ef database update -s ..\powerfuel-api\powerfuel-api.csproj
