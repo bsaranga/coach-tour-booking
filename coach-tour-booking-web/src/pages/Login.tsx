@@ -65,7 +65,7 @@ export default function Login() {
             }}
           >
             <div style={{display: 'flex', flexDirection: "column", alignItems: 'center', marginBottom: '4rem'}}>
-              <img  src={logo} />
+              <img alt='company logo' src={logo} />
               <Typography variant='h2'>EuroBus</Typography>
             </div>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
