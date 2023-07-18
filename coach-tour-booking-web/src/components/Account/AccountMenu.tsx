@@ -15,7 +15,7 @@ import AuthService from '../../services/AuthService';
 export default function AccountMenu() {
 
   const navigate = useNavigate();
-  const authService = new AuthService(); 
+  const authService = new AuthService();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -26,7 +26,7 @@ export default function AccountMenu() {
     setAnchorEl(null);
     authService.logout().then(res => {
       if (res.ok) {
-        navigate("/");
+        navigate("login");
       }
     });
   };

@@ -15,15 +15,18 @@ function App() {
   const authService = new AuthService();
 
   const navigate = useNavigate();
-  const [viewState, setViewState] = useState<IViewState>({ screenSize: 'desktop'})
-  const [authenticationStatus, setAuthenticationStatus] = useState<boolean | null>(null);
+  const [viewState, setViewState] = useState<IViewState>({ screenSize: 'desktop'});
 
   useEffect(() => {
-    // lift the authentication status up to redux
     authService.isAuthenticated().then(res => {
       res.json().then(authStatus => {
-        console.log(authStatus)
-        setAuthenticationStatus(authStatus.authenticated);
+        console.log(authStatus);
+        const isAuthenticated = authStatus.authenticated as boolean;
+        if (isAuthenticated) {
+          navigate("explore");
+        } else {
+          navigate("login");
+        }
       })
     })
 
@@ -48,15 +51,6 @@ function App() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    console.log(authenticationStatus)
-    if (authenticationStatus != null && !authenticationStatus) {
-      navigate("login");
-    } else if (authenticationStatus) {
-      navigate("explore");
-    }
-  }, [authenticationStatus, navigate])
 
   function handleMobileChange(event: MediaQueryListEvent) {
     const mql = event.currentTarget as MediaQueryList;

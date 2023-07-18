@@ -1,13 +1,15 @@
 import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 import explorePage from "./slices/ExploreSlice";
 import toastSlice from './slices/ToastSlice';
+import authSlice from './slices/AuthSlice';
 
 export const listener = createListenerMiddleware();
 
 const store = configureStore({
 	reducer: {
 		explorePage,
-		toastSlice
+		toastSlice,
+		authSlice,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware({
 		serializableCheck: {

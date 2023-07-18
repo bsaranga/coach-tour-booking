@@ -3,9 +3,9 @@ import euroBusLogo from '../../img/euro-bus-logo.png'
 import AccountMenu from "../Account/AccountMenu";
 import Notifications from "../Notifications/Notifications";
 
-export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
+export default function AppHeader(props: any) {
     return (
-        <div {...props}>
+        <div>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar variant="dense" sx={{ backgroundColor: "#099ae8    " }}>
@@ -14,7 +14,7 @@ export default function AppHeader(props: React.HTMLAttributes<HTMLDivElement>) {
                             EuroBus
                         </Typography>
                         <Notifications/>
-                        <AccountMenu/>
+                        <AccountMenu />
                     </Toolbar>
                 </AppBar>
             </Box>
