@@ -1,3 +1,5 @@
+import ICustomerRegistration from "../interfaces/ICustomerRegistration";
+
 export default class AuthService {
     
     private host?: string;
@@ -28,6 +30,17 @@ export default class AuthService {
         return fetch(`${this.host}/api/auth/logout`, {
             method: "GET",
             credentials: "include"
+        })
+    }
+
+    register(customerInfo: ICustomerRegistration) {
+        return fetch(`${this.host}/api/auth/register/customer`, {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(customerInfo),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
     }
 }
