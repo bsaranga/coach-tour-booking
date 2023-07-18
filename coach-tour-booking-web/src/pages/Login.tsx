@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import loginPageImg from '../img/loginpage_main.jpg';
 import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
+import logo from '../img/euro-bus-logo.png';
 
 export default function Login() {
 
@@ -63,6 +64,10 @@ export default function Login() {
               alignItems: 'center',
             }}
           >
+            <div style={{display: 'flex', flexDirection: "column", alignItems: 'center', marginBottom: '4rem'}}>
+              <img  src={logo} />
+              <Typography variant='h2'>EuroBus</Typography>
+            </div>
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
