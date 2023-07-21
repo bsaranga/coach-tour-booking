@@ -1,0 +1,96 @@
+@startuml ASPNETCoreApp
+
+!define ASYNC true
+
+class aspnetcore_framework.DIContainer as "AspNetCore_DIContainer" #palegreen {
+
+}
+
+hide empty members
+
+interface aspnetcore_framework.IController {
+
+}
+
+class aspnetcore_framework.ServiceCollection {
+
+}
+
+interface aspnetcore_framework.IServiceCollection {
+
+}
+
+interface aspnetcore_framework.Middleware {
+
+}
+
+class aspnetcore_framework.AuthorizationMiddleware {
+
+}
+
+class aspnetcore_framework.AuthenticationMiddleware {
+
+}
+
+class our_code.Controller {
+
+}
+
+class aspnetcore_framework.Program {
+
+}
+
+interface our_code.IScopedService {
+
+}
+
+class our_code.ScopedService {
+
+}
+
+class our_code.DbContext {
+
+}
+
+interface aspnetcore_framework.IDbContext {
+
+}
+
+interface our_code.IRepository {
+
+}
+
+class our_code.Repository {
+
+}
+
+aspnetcore_framework.DIContainer ..> aspnetcore_framework.ServiceCollection
+aspnetcore_framework.DIContainer .> aspnetcore_framework.Middleware
+aspnetcore_framework.DIContainer ..> aspnetcore_framework.IController
+aspnetcore_framework.IServiceCollection --|> aspnetcore_framework.ServiceCollection
+
+aspnetcore_framework.Program --|> aspnetcore_framework.IServiceCollection
+
+aspnetcore_framework.Middleware ..> aspnetcore_framework.IController
+aspnetcore_framework.AuthorizationMiddleware ..> aspnetcore_framework.Middleware
+aspnetcore_framework.AuthenticationMiddleware ..> aspnetcore_framework.Middleware
+
+our_code.Controller --|> aspnetcore_framework.IController
+
+our_code.ScopedService ..> our_code.IScopedService
+
+aspnetcore_framework.ServiceCollection -> our_code.ScopedService: <<scoped>>
+
+our_code.DbContext ..> aspnetcore_framework.IDbContext
+
+aspnetcore_framework.ServiceCollection --> our_code.DbContext: <<scoped>>
+
+our_code.Repository ..> our_code.IRepository
+our_code.Repository -> aspnetcore_framework.IDbContext
+
+aspnetcore_framework.ServiceCollection -> our_code.Repository: <<scoped>>
+our_code.ScopedService -> our_code.IRepository
+
+our_code.Controller -> our_code.IScopedService
+
+@enduml
