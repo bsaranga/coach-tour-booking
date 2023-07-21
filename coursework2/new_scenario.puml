@@ -13,17 +13,6 @@ interface Queue<T> {
   + size(): int
 }
 
-class CoachQueue<Coach> {
-  - queueList: List<Coach>
-  + enqueue(item: Coach): void
-  + dequeue(): Coach
-  + peak(): Coach
-  + rear(): Coach
-  + isFull(): boolean
-  + isEmpty(): boolean
-  + size(): int
-}
-
 class BookingService {
     ..
     BookingService class attributes and methods
@@ -31,10 +20,11 @@ class BookingService {
 }
 
 class CoachQueueDecorator<Coach> {
-  - decoratedQueue: CoachQueue<Coach>
+  - decoratedQueue: Queue<Coach>
   - searchResultList: List<Coach>
   - bookingService: BookingService
-  + CoachQueueDecorator(decoratedQueue: CoachQueue<Coach>, bookingService: BookingService)
+  - coachQuery: CoachQuery
+  + CoachQueueDecorator(decoratedQueue: Queue<Coach>, bookingService: BookingService, coachQuery: CoachQuery)
   + enqueue(item: Coach): void
   + dequeue(): Coach
   + searchCoaches(searchCondition: Predicate<Coach>): List<Coach>
@@ -54,8 +44,7 @@ class CoachQuery<Coach> {
   + searchCoaches(searchCondition: Predicate<Coach>): List<Coach>
 }
 
-Queue <|.. CoachQueue
-CoachQueue <- CoachQueueDecorator
+Queue <|.. CoachQueueDecorator
 CoreDbContext <- CoachQuery
 CoachQueueDecorator --> CoachQuery
 CoachQueueDecorator -up-> BookingService
