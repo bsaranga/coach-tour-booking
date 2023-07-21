@@ -1,0 +1,62 @@
+@startuml DecoratorPatternWithCoachQuery
+
+skinparam wrapWidth 500
+hide empty members
+
+interface Queue<T> {
+  + enqueue(item: T): void
+  + dequeue(): T
+  + peak(): T
+  + rear(): T
+  + isFull(): boolean
+  + isEmpty(): boolean
+  + size(): int
+}
+
+class CoachQueue<Coach> {
+  - queueList: List<Coach>
+  + enqueue(item: Coach): void
+  + dequeue(): Coach
+  + peak(): Coach
+  + rear(): Coach
+  + isFull(): boolean
+  + isEmpty(): boolean
+  + size(): int
+}
+
+class BookingService {
+    ..
+    BookingService class attributes and methods
+    ..
+}
+
+class CoachQueueDecorator<Coach> {
+  - decoratedQueue: CoachQueue<Coach>
+  - searchResultList: List<Coach>
+  - bookingService: BookingService
+  + CoachQueueDecorator(decoratedQueue: CoachQueue<Coach>, bookingService: BookingService)
+  + enqueue(item: Coach): void
+  + dequeue(): Coach
+  + searchCoaches(searchCondition: Predicate<Coach>): List<Coach>
+  + listCoaches(): List<Coach>
+  + assignCoachToBooking(bookingId: string, searchCondition: Predicate<Coach>): void
+}
+
+class CoreDbContext {
+    ..
+    CoreDbContext class attributes and methods
+    ..
+}
+
+class CoachQuery<Coach> {
+  - dbContext: CoreDbContext
+  + CoachQuery(dbContext: CoreDbContext)
+  + searchCoaches(searchCondition: Predicate<Coach>): List<Coach>
+}
+
+Queue <|.. CoachQueue
+CoachQueue <- CoachQueueDecorator
+CoreDbContext <- CoachQuery
+CoachQueueDecorator --> CoachQuery
+CoachQueueDecorator -up-> BookingService
+@enduml

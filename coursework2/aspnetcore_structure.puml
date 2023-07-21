@@ -32,7 +32,7 @@ class aspnetcore_framework.AuthenticationMiddleware {
 
 }
 
-class our_code.Controller {
+class application.Controller {
 
 }
 
@@ -40,27 +40,27 @@ class aspnetcore_framework.Program {
 
 }
 
-interface our_code.IScopedService {
+interface application.IScopedService {
 
 }
 
-class our_code.ScopedService {
+class application.ScopedService {
 
 }
 
-class our_code.DbContext {
+class application.CoachTourCore_DbContext {
 
 }
 
-interface aspnetcore_framework.IDbContext {
+abstract aspnetcore_framework.DbContext {
 
 }
 
-interface our_code.IRepository {
+interface application.IRepository {
 
 }
 
-class our_code.Repository {
+class application.Repository {
 
 }
 
@@ -69,28 +69,28 @@ aspnetcore_framework.DIContainer .> aspnetcore_framework.Middleware
 aspnetcore_framework.DIContainer ..> aspnetcore_framework.IController
 aspnetcore_framework.IServiceCollection --|> aspnetcore_framework.ServiceCollection
 
-aspnetcore_framework.Program --|> aspnetcore_framework.IServiceCollection
+aspnetcore_framework.Program --> aspnetcore_framework.DIContainer
 
 aspnetcore_framework.Middleware ..> aspnetcore_framework.IController
 aspnetcore_framework.AuthorizationMiddleware ..> aspnetcore_framework.Middleware
 aspnetcore_framework.AuthenticationMiddleware ..> aspnetcore_framework.Middleware
 
-our_code.Controller --|> aspnetcore_framework.IController
+application.Controller --|> aspnetcore_framework.IController
 
-our_code.ScopedService ..> our_code.IScopedService
+application.ScopedService ..> application.IScopedService
 
-aspnetcore_framework.ServiceCollection -> our_code.ScopedService: <<scoped>>
+aspnetcore_framework.ServiceCollection -> application.ScopedService: <<scoped>>
 
-our_code.DbContext ..> aspnetcore_framework.IDbContext
+application.CoachTourCore_DbContext -|> aspnetcore_framework.DbContext
 
-aspnetcore_framework.ServiceCollection --> our_code.DbContext: <<scoped>>
+aspnetcore_framework.ServiceCollection --> application.CoachTourCore_DbContext: <<scoped>>
 
-our_code.Repository ..> our_code.IRepository
-our_code.Repository -> aspnetcore_framework.IDbContext
+application.Repository ..> application.IRepository
+application.Repository -> application.CoachTourCore_DbContext
 
-aspnetcore_framework.ServiceCollection -> our_code.Repository: <<scoped>>
-our_code.ScopedService -> our_code.IRepository
+aspnetcore_framework.ServiceCollection -> application.Repository: <<scoped>>
+application.ScopedService -> application.IRepository
 
-our_code.Controller -> our_code.IScopedService
+application.Controller -> application.IScopedService
 
 @enduml

@@ -1,0 +1,69 @@
+@startuml CustomerEntity
+
+skinparam wrapWidth 200
+
+class Customer {
+  - id: guid
+  - firstName: string
+  - lastName: string
+  - surname: string
+  - email: string
+  - phoneNumber: string
+  - address: string
+  - euPassport: EuPassport
+
+  + Customer(id: guid, firstName: string, lastName: string, surname: string, email: string, phoneNumber: string, address: string, euPassport: EuPassport)
+  + getId(): guid
+  + getFirstName(): string
+  + getLastName(): string
+  + getSurname(): string
+  + getEmail(): string
+  + getPhoneNumber(): string
+  + getAddress(): string
+  + getEuPassport(): EuPassport
+}
+
+class EuPassport {
+  - id: guid
+  - euPassportNumber: string
+  - country: string
+
+  + EuPassport(id: guid, euPassportNumber: string, country: string)
+  + getId(): guid
+  + getEuPassportNumber(): string
+  + getCountry(): string
+}
+
+class Coach {
+  - id: guid
+  - registrationNumber: string
+  - make: string
+  - model: string
+  - capacity: int
+  - availableSeats: List<CoachSeat>
+  - bookedSeats: List<CoachSeat>
+
+  + Coach(id: guid, registrationNumber: string, make: string, model: string, capacity: int)
+  + getId(): guid
+  + getRegistrationNumber(): string
+  + getMake(): string
+  + getModel(): string
+  + getCapacity(): int
+  + setSeats(): void
+  + getAvailableSeats(): int
+  + bookSeat(seatNumber: string): void
+  + cancelBooking(seatNumber: string): void
+}
+
+class CoachSeat {
+  - id: guid
+  - seatNumber: string
+
+  + CoachSeat(id: guid, seatNumber: string)
+  + getId(): guid
+  + getSeatNumber(): string
+}
+
+Customer -> EuPassport
+CoachSeat -* Coach
+@enduml

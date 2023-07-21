@@ -1,0 +1,85 @@
+@startuml BookingApp
+
+skinparam wrapWidth 350
+hide empty members
+
+interface IBookingRepository {
+  + create(booking: Booking): void
+  + update(booking: Booking): void
+  + delete(id: guid): void
+  + getById(id: guid): Booking
+  + getAll(): List<Booking>
+}
+
+class BookingRepository implements IBookingRepository {
+  - bookings: List<Booking>
+  + create(booking: Booking): void
+  + update(booking: Booking): void
+  + delete(id: guid): void
+  + getById(id: guid): Booking
+  + getAll(): List<Booking>
+}
+
+class BookingService {
+  - bookingRepository: IBookingRepository
+  + BookingService(bookingRepository: IBookingRepository)
+  + createBooking(journey: Journey, customer: Customer, luggage: Luggage, itinerary: Itinerary, bookedSeats: List<CoachSeat>): void
+  + updateBooking(booking: Booking): void
+  + deleteBooking(id: guid): void
+  + getBookingById(id: guid): Booking
+  + getAllBookings(): List<Booking>
+}
+
+interface IBookingQueryRepository {
+  + getBookingsByCustomer(customer: Customer): List<BookingDTO>
+  + getBookingsByLocation(location: Location): List<BookingDTO>
+  + getBookingsWithLuggageExceedingWeight(weightThreshold: double): List<BookingDTO>
+}
+
+class BookingQueryRepository implements IBookingQueryRepository {
+  - bookingRepository: IBookingRepository
+  + BookingQueryRepository(bookingRepository: IBookingRepository)
+  + getBookingsByCustomer(customer: Customer): List<BookingDTO>
+  + getBookingsByLocation(location: Location): List<BookingDTO>
+  + getBookingsWithLuggageExceedingWeight(weightThreshold: double): List<BookingDTO>
+}
+
+class BookingDTO {
+  + id: guid
+  + bookingDate: DateTime
+  + journey: JourneyDTO
+  + customer: CustomerDTO
+  + luggage: List<LuggageDTO>
+  + optedInItinerary: List<ItineraryDTO>
+  + bookedSeats: List<CoachSeatDTO>
+}
+
+class JourneyDTO {
+  JourneyDTO class attributes (not shown for brevity)
+}
+
+class CustomerDTO {
+  CustomerDTO class attributes (not shown for brevity)
+}
+
+class LuggageDTO {
+  LuggageDTO class attributes (not shown for brevity)
+}
+
+class ItineraryDTO {
+  ItineraryDTO class attributes (not shown for brevity)
+}
+
+class CoachSeatDTO {
+  CoachSeatDTO class attributes (not shown for brevity)
+}
+
+BookingService "1" *-- "1" IBookingRepository: "uses"
+BookingQueryRepository "1" *-- "1" IBookingRepository: "uses"
+IBookingQueryRepository -up- BookingDTO
+BookingDTO *-up- JourneyDTO
+BookingDTO *- CustomerDTO
+BookingDTO *-up- LuggageDTO
+BookingDTO *-- ItineraryDTO
+BookingDTO *-- CoachSeatDTO
+@enduml

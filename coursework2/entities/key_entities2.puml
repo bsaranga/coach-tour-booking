@@ -1,0 +1,55 @@
+@startuml Routes
+skinparam wrapWidth 300
+
+class CountryCityPair {
+  - id: guid
+  + country: string
+  + city: string
+  + CountryCityPair(country: string, city: string)
+}
+
+class Location {
+  - id: guid
+  + locationName: string
+  + landmarkDescription: string
+  + latitude: double
+  + longitude: double
+  + Location(latitude: double, longitude: double)
+}
+
+class WayPoint {
+  - id: guid
+  + latitude: double
+  + longitude: double
+  + WayPoint(latitude: double, longitude: double)
+}
+
+class Route {
+  - id: guid
+  + origin: Location
+  + destination: Location
+  - wayPoints: List<WayPoint>
+  + Route(origin: Location, destination: Location)
+  + setWayPoints(wayPoints: List<WayPoint>)
+  + getWayPoints(): List<WayPoint>
+}
+
+class Journey {
+  -id: guid
+  + origin: CountryCityPair
+  + destination: CountryCityPair
+  + date: DateTime
+  + assignedCoach: Coach
+  + routes: List<Route>
+  + Journey(origin: CountryCityPair, destination: CountryCityPair, defaultRoute: Route)
+  + addRoute(Route route): void
+  + assignedCoach(coach: Coach): void
+}
+
+Route "1" *-- "many" WayPoint : "consists of"
+Route --> Location : "origin"
+Route --> Location : "destination"
+Journey "1" o-- "many" Route: "has"
+Journey --> CountryCityPair
+
+@enduml

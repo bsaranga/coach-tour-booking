@@ -1,0 +1,62 @@
+@startuml Booking
+
+skinparam wrapWidth 300
+hide empty members
+
+class Booking {
+  - id: guid
+  - bookingDate: DateTime
+  - journey: Journey
+  - customer: Customer
+  - luggage: List<Luggage>
+  - optedInItinerary: List<Itinerary>
+  - bookedSeats: List<CoachSeat>
+
+  + Booking(journey: Journey, customer: Customer, luggage: Luggage, itinerary: Itinerary, bookedSeats: List<CoachSeat>)
+  + getBookingDate(): DateTime
+  + getJourney(): Journey
+  + getCustomer(): Customer
+  + getLuggage(): Luggage
+  + getItinerary(): List<Itinerary>
+  + getBookedSeats(): List<CoachSeat>
+  + addLuggage(Luggage luggage): void
+}
+
+class Journey {
+  Journey class attributes and methods (not shown for brevity)
+}
+
+class Customer {
+  Customer class attributes and methods (not shown for brevity)
+}
+
+class Luggage {
+  - id: guid
+  + weight: double
+  - checkInAt: Location
+  - checkOutAt: Location
+  + Luggage (weight: double, checkInAt: Location)
+  + setCheckOutLocation(location: Location)
+  + getCheckInLocation: Location
+  + getCheckoutLocation: Location
+}
+
+class Itinerary {
+  - id: guid
+  + name: string
+  + description: string
+  + location: Location
+  + Itinerary (name: string, description: string, location: Location)
+}
+
+class CoachSeat {
+  CoachSeat class attributes and methods (not shown for brevity)
+}
+
+Booking "1" o--> "*" CoachSeat : "has"
+Booking "1" -> "1" Journey : "has"
+Booking "1" --> "1" Customer : "associated with"
+Booking "1" o--> "1" Luggage : "includes"
+Booking "1" o--> "1" Itinerary : "related to"
+
+@enduml

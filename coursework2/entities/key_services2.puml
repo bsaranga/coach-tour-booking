@@ -1,0 +1,103 @@
+@startuml RouteService
+
+top to bottom direction
+
+interface IRouteRepository {
+  + create(route: Route): void
+  + update(route: Route): void
+  + delete(id: guid): void
+  + getById(id: guid): Route
+  + getAll(): List<Route>
+}
+
+class RouteRepository implements IRouteRepository {
+  - routes: List<Route>
+  + create(route: Route): void
+  + update(route: Route): void
+  + delete(id: guid): void
+  + getById(id: guid): Route
+  + getAll(): List<Route>
+}
+
+class RouteService {
+  - routeRepository: IRouteRepository
+  + RouteService(routeRepository: IRouteRepository)
+  + createRoute(route: Route): void
+  + updateRoute(route: Route): void
+  + deleteRoute(id: guid): void
+  + getRouteById(id: guid): Route
+  + getAllRoutes(): List<Route>
+}
+
+interface IJourneyRepository {
+  + create(journey: Journey): void
+  + update(journey: Journey): void
+  + delete(id: guid): void
+  + getById(id: guid): Journey
+  + getAll(): List<Journey>
+}
+
+class JourneyRepository implements IJourneyRepository {
+  - journeys: List<Journey>
+  + create(journey: Journey): void
+  + update(journey: Journey): void
+  + delete(id: guid): void
+  + getById(id: guid): Journey
+  + getAll(): List<Journey>
+}
+
+class JourneyService {
+  - journeyRepository: IJourneyRepository
+  + JourneyService(journeyRepository: IJourneyRepository)
+  + createJourney(journey: Journey): void
+  + updateJourney(journey: Journey): void
+  + deleteJourney(id: guid): void
+  + getJourneyById(id: guid): Journey
+  + getAllJourneys(): List<Journey>
+}
+
+
+class RouteQueryService {
+  - routeRepository: IRouteRepository
+  + RouteQueryService(routeRepository: IRouteRepository)
+  + getRouteWayPoints(routeId: guid): List<WayPointDTO>
+  + getRoutesByLocation(location: Location): List<RouteDTO>
+}
+
+class JourneyQueryService {
+  - journeyRepository: IJourneyRepository
+  + JourneyQueryService(journeyRepository: IJourneyRepository)
+  + getJourneyRoutes(journeyId: guid): List<RouteDTO>
+  + getJourneysByLocation(location: CountryCityPair): List<JourneyDTO>
+}
+
+class WayPointDTO {
+  + latitude: double
+  + longitude: double
+}
+
+class RouteDTO {
+  + origin: Location
+  + destination: Location
+  + wayPoints: List<WayPointDTO>
+}
+
+class JourneyDTO {
+  + origin: CountryCityPair
+  + destination: CountryCityPair
+  + date: DateTime
+  + assignedCoach: Coach
+  + routes: List<RouteDTO>
+}
+
+RouteQueryService --> WayPointDTO
+RouteQueryService --> RouteDTO
+JourneyQueryService --> JourneyDTO
+JourneyQueryService -> RouteDTO
+
+RouteQueryService "1" *- "1" IRouteRepository: "uses"
+JourneyQueryService "1" *-- "1" IJourneyRepository: "uses"
+JourneyService "1" *- "1" IJourneyRepository: "uses"
+RouteService "1" *-- "1" IRouteRepository: "uses"
+
+@enduml

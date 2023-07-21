@@ -1,0 +1,70 @@
+@startuml CustomerService
+
+skinparam wrapWidth 500
+hide empty members
+
+interface ICustomerRepository {
+    + AddCustomer(customer: Customer): void
+    + RemoveCustomer(customerId: guid): void
+    + UpdateCustomer(customerId: guid, updatedCustomer: Customer): void
+    + GetCustomerById(customerId: guid): Customer
+    + GetAllCustomers(): List<Customer>
+}
+
+class Customer {
+    Customer class attributes and methods (not shown for brevity)
+}
+
+class CustomerService {
+    - customerRepository: ICustomerRepository
+
+    + CustomerService(customerRepository: ICustomerRepository)
+    + AddCustomer(customer: Customer): void
+    + RemoveCustomer(customerId: guid): void
+    + UpdateCustomer(customerId: guid, updatedCustomer: Customer): void
+    + GetCustomerById(customerId: guid): Customer
+    + GetAllCustomers(): List<Customer>
+    + GetCustomerProfileInfo(): CustomerSummary
+}
+
+interface ICustomerQuery {
+    + getCustomerSummary(customerId: guid): CustomerSummary
+    + getCustomerContactInfo(customerId: guid): CustomerContactInfo
+    + getCustomerAddress(customerId: guid): CustomerAddress
+}
+
+class CustomerSummary {
+    - customerId: guid
+    - fullName: string
+    ..
+    details hidden for brevity
+    ..
+}
+
+class CustomerContactInfo {
+    - customerId: guid
+    - email: string
+    - phoneNumber: string
+    ..
+    details hidden for brevity
+    ..
+}
+
+class CustomerAddress {
+    - customerId: guid
+    - address: string
+    - city: string
+    - postalCode: string
+    ..
+    details hidden for brevity
+    ..
+}
+
+ICustomerQuery --> CustomerSummary
+ICustomerQuery --> CustomerContactInfo
+ICustomerQuery --> CustomerAddress
+CustomerService --> ICustomerQuery : "uses"
+CustomerService --> ICustomerRepository : "uses"
+CustomerService -> Customer : "uses"
+
+@enduml
