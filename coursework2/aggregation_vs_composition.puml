@@ -1,0 +1,23 @@
+@startuml
+class University {
+    - universityName: string
+    - departments: List<Department>
+}
+
+class Department {
+    - departmentName: string
+}
+
+class Car {
+    - carModel: string
+    - engine: Engine
+}
+
+class Engine {
+    - engineType: string
+}
+
+Car "1" *-- "1" Engine : composition
+
+University "1" o-- "0..*" Department : aggregation
+@enduml

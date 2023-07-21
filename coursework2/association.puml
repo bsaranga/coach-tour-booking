@@ -1,0 +1,20 @@
+@startuml association
+
+Class Student {
+  + studentId: int
+  + name: string
+  - courses: List<Course>
+  + addCourse(Course course): void
+}
+
+Class Course {
+  + courseId: int
+  + title: string
+  - students: List<Student>
+  + registerStudent(Student student): void
+}
+
+Student --> Course : enrolls in
+Course --> Student : has students
+
+@enduml
